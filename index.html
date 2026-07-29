@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>A Birthday Beyond Time — Stacy</title>
+
+  <!-- Premium typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Libraries (CDN placeholders; swap with local copies if desired) -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Intro (black screen + typed initialization) -->
+  <div id="intro" aria-hidden="false">
+    <div class="intro-inner">
+      <span id="typed-intro" aria-live="polite" role="status"></span>
+    </div>
+  </div>
+
+  <!-- Application root -->
+  <div id="app" class="hidden">
+    <!-- Decorative particles canvas -->
+    <canvas id="particles" aria-hidden="true"></canvas>
+
+    <header class="hero" role="banner">
+      <div class="hero-inner container">
+        <h1 class="title" id="title">Happy Birthday, Stacy.</h1>
+        <p class="subtitle">«Some people don't realize how much light they carry until they brighten someone else's path.»</p>
+
+        <div class="hero-meta">
+          <div id="birthday-clock" aria-live="polite" class="clock" title="Time since midnight of your birthday">
+            <span class="clock-label">You've officially been celebrating for</span>
+            <div class="clock-value"><span id="clock-hours">00</span> Hours <span id="clock-minutes">00</span> Minutes <span id="clock-seconds">00</span> Seconds</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" role="main">
+      <!-- Timeline -->
+      <section id="timeline" class="container reveal-section" aria-labelledby="timeline-title">
+        <h2 id="timeline-title">Journey Timeline</h2>
+        <ol class="timeline-list" role="list">
+          <li>Birth</li>
+          <li>Dreams</li>
+          <li>Growth</li>
+          <li>Challenges</li>
+          <li>Strength</li>
+          <li>Today</li>
+          <li>Tomorrow</li>
+        </ol>
+      </section>
+
+      <!-- What I See (flip cards placeholder) -->
+      <section id="qualities" class="container reveal-section" aria-labelledby="qualities-title">
+        <h2 id="qualities-title">What I See</h2>
+        <div class="cards-grid" role="list">
+          <article class="flip-card" tabindex="0" aria-label="Kind — Even when you don't notice it.">
+            <div class="front">Kind</div>
+            <div class="back">Even when you don't notice it.</div>
+          </article>
+          <article class="flip-card" tabindex="0" aria-label="Curious — You ask 'why' before accepting 'how'.">
+            <div class="front">Curious</div>
+            <div class="back">You ask "why" before accepting "how."</div>
+          </article>
+          <!-- Add more cards -->
+        </div>
+      </section>
+
+      <!-- Fake Terminal -->
+      <section id="terminal" class="container reveal-section" aria-labelledby="terminal-title">
+        <h2 id="terminal-title">Developer Terminal</h2>
+        <pre class="terminal" aria-live="polite">
+&gt; Verifying identity...
+✓ Stacy
+&gt; Character...
+✓ Exceptional
+&gt; Curiosity...
+✓ Growing
+        </pre>
+      </section>
+
+      <!-- Letter from the Future -->
+      <section id="letter" class="container reveal-section" aria-labelledby="letter-title">
+        <h2 id="letter-title">A Letter From The Future</h2>
+        <button id="open-letter" class="glass-btn" aria-expanded="false">Open the envelope</button>
+        <div id="letter-content" class="letter hidden" role="dialog" aria-modal="true" aria-labelledby="letter-heading">
+          <h3 id="letter-heading">Dear Stacy,</h3>
+          <p>I know you probably still think you're behind.</p>
+          <p>You're not. You're simply earlier in your journey than you realize.</p>
+          <p>See you soon.</p>
+          <p>— Future You</p>
+          <button id="close-letter" class="glass-btn">Close</button>
+        </div>
+      </section>
+
+      <!-- Reflection Pool (placeholder) -->
+      <section id="reflection" class="container reveal-section" aria-labelledby="reflection-title">
+        <h2 id="reflection-title">Reflection Pool</h2>
+        <div id="pool" class="pool" role="img" aria-label="Reflection pool. Move cursor to create ripples."></div>
+        <p class="pool-text">Pause. Look how far you've already come.</p>
+      </section>
+
+      <!-- Checklist -->
+      <section id="mission" class="container reveal-section" aria-labelledby="mission-title">
+        <h2 id="mission-title">Today's Mission</h2>
+        <ul class="checklist" role="list">
+          <li><label><input type="checkbox"> Smile</label></li>
+          <li><label><input type="checkbox"> Eat Cake</label></li>
+          <li><label><input type="checkbox"> Laugh</label></li>
+          <li><label><input type="checkbox"> Make Memories</label></li>
+          <li><label><input type="checkbox"> Believe In Yourself</label></li>
+        </ul>
+      </section>
+
+      <!-- Final Scene (minimal) -->
+      <section id="final" class="container final-scene" aria-labelledby="final-title">
+        <h2 id="final-title" class="visually-hidden">Final Scene</h2>
+        <p class="final-message">Never let one difficult day convince you that you have a difficult life.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer container" role="contentinfo">
+      <p>«Any resemblance to the birthday girl is completely intentional.»</p>
+    </footer>
+  </div>
+</body>
+</html>
